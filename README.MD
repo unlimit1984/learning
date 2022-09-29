@@ -1,3 +1,3 @@
 # Learning
 
-## All my learnings in one place+
+## All my learnings in one place
