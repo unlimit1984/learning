@@ -11,22 +11,38 @@
 // someObservable$.subscribe(value => console.log(value));
 
 //2
-import {
-  name$,
-  storeDataOnServer,
-  storeDataOnServerError
-} from './external';
+// import {
+//   name$,
+//   storeDataOnServer,
+//   storeDataOnServerError
+// } from './external';
 
-// name$.subscribe(value => console.log(value));
+// // name$.subscribe(value => console.log(value));
 
-storeDataOnServer('Some value').subscribe({
-  next: value => console.log(value),
-  error: err => console.log('Error when saving:', err.message)
-});
+// storeDataOnServer('Some value').subscribe({
+//   next: value => console.log(value),
+//   error: err => console.log('Error when saving:', err.message)
+// });
 
 // storeDataOnServerError('Some value').subscribe({
 //   next: value => console.log(value),
 //   error: err => console.log('Error when saving:', err.message)
 // });
 
-//3
+//09
+import { Observable, Subscriber } from 'rxjs';
+
+//Observable
+const observable$ = new Observable(subscriber => {
+  subscriber.next('Alice');
+  subscriber.next('Bob');
+});
+
+//Observer
+const observer = {
+  next: value => console.log(value)
+};
+
+//Subscription
+observable$.subscribe(observer);
+
