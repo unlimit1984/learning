@@ -89,12 +89,29 @@ import { Observable, Subscriber } from 'rxjs';
 
 //22 - Empty Observable
 
-const observable = new Observable(subscriber => {
+// const observable = new Observable(subscriber => {
+//   console.log('Observable executed');
+// });
+//
+// console.log('Before subscribe');
+// observable.subscribe({
+//   next: value => console.log(value)
+// });
+// console.log('After subscribe');
+
+//23 - Emit next notification - synchronous emission
+
+const observable = new Observable<string>(subscriber => {
   console.log('Observable executed');
+  subscriber.next('Alice');
 });
 
 console.log('Before subscribe');
-observable.subscribe({
-  next: value => console.log(value)
-});
+// observable.subscribe({
+//   next: value => console.log(value)
+// });
+// OR shortened version
+observable.subscribe(value => console.log(value));
+
 console.log('After subscribe');
+
