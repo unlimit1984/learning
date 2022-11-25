@@ -101,17 +101,29 @@ import { Observable, Subscriber } from 'rxjs';
 
 //23 - Emit next notification - synchronous emission
 
+// const observable = new Observable<string>(subscriber => {
+//   console.log('Observable executed');
+//   subscriber.next('Alice');
+// });
+//
+// console.log('Before subscribe');
+// // observable.subscribe({
+// //   next: value => console.log(value)
+// // });
+// // OR shortened version
+// observable.subscribe(value => console.log(value));
+//
+// console.log('After subscribe');
+
+//24 - Emit next notification - asynchronous emission
 const observable = new Observable<string>(subscriber => {
   console.log('Observable executed');
   subscriber.next('Alice');
+  subscriber.next('Ben');
+  setTimeout(() => subscriber.next('Charlie'), 2000);
 });
 
 console.log('Before subscribe');
-// observable.subscribe({
-//   next: value => console.log(value)
-// });
-// OR shortened version
 observable.subscribe(value => console.log(value));
 
 console.log('After subscribe');
-
