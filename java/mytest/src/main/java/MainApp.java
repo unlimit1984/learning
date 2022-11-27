@@ -1,4 +1,17 @@
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.Set;
+import java.util.Stack;
 
 /**
  * Created by Vladimir_Vysokomorny on 11-Jan-18.
@@ -186,7 +199,148 @@ public class MainApp {
 //--------------------------
 
 
-        System.out.println(Character.getNumericValue('7'));
+//        System.out.println(Character.getNumericValue('7'));
+//--------------------------
+//        int[] arr = new int[]{0, 1, 2, 3, 4, 5};
+        Integer[] arr = new Integer[]{0, 1, 2, 3, 4, 5};
+
+        Arrays.sort(arr, Comparator.reverseOrder());
+        Integer[] subarray = Arrays.copyOfRange(arr, 2,5);
+
+        System.out.println(Arrays.toString(arr));
+//        System.out.println(Arrays.toString(subarray));
+
+        String str = "abcdef";
+        char[] chars = str.toCharArray();
+//        Arrays.sort();
+        String s2 = Arrays.toString(chars);
+        System.out.println(s2);
+
+        List<Integer> list = new ArrayList<>(Arrays.asList(0, 1, 2, 3, 4, 5));
+//        list.remove(0);
+        list.sort((a, b) -> b - a);
+        System.out.println(list);
+
+        System.out.println("Set");
+        Set<Integer> set = new HashSet<>(Arrays.asList(0, 1, 2, 3, 3));
+        set.add(2);
+        System.out.println(set);
+
+        System.out.println("Map");
+        Map<Integer, Integer> map = Map.of(1, 1, 2, 2, 3, 3);
+        System.out.println(map);
+        map = new HashMap<>() {{
+            put(1, 1);
+            put(2, 2);
+            put(3, 3);
+        }};
+
+        map.put(3, 4);
+        System.out.println(map);
+
+        System.out.println("Stack");
+        Stack<Character> stack = new Stack<>() {{
+            push('A');
+            push('B');
+            push('C');
+        }};
+        stack.pop();
+        stack.push('D');
+        System.out.println(stack);
+
+
+        System.out.println("Queue");
+        Queue<Character> queue = new LinkedList<>(new ArrayList<>(Arrays.asList('A', 'B', 'C')));
+        queue.poll();
+        queue.add('D');
+        System.out.println(queue);
+
+
+        System.out.println("Priority Queue");
+//        PriorityQueue<Character> priorityQueue = new PriorityQueue<>();
+//        PriorityQueue<Character> priorityQueue = new PriorityQueue<>(new ArrayList<>(Arrays.asList('C', 'B', 'D')) );
+//        PriorityQueue<Character> priorityQueue = new PriorityQueue<>(3, (o1, o2) -> o2 - o1);
+//        PriorityQueue<Character> priorityQueue = new PriorityQueue<>(3, (o1, o2) -> o1 - o2);
+        PriorityQueue<Character> priorityQueue = new PriorityQueue<>(3, (o1, o2) -> Character.compare(o2, o1));
+        priorityQueue.addAll(new ArrayList<>(Arrays.asList('C', 'B', 'D', 'E', 'A', 'A')));
+//        priorityQueue.add('C');
+//        priorityQueue.add('B');
+//        priorityQueue.add('D');
+//        priorityQueue.add('E');
+//        priorityQueue.add('A');
+//        priorityQueue.add('A');
+        System.out.println(priorityQueue);
+
+        priorityQueue.poll();
+        priorityQueue.add('A');
+        while (!priorityQueue.isEmpty()) {
+            System.out.println(priorityQueue.poll());
+        }
+
+
+        class Movie {
+            final int views;
+            final int id;
+
+            Movie(int id, int views) {
+                this.id = id;
+                this.views = views;
+            }
+
+            @Override
+            public String toString() {
+                return "Movie{" +
+                        "views=" + views +
+                        ", id=" + id +
+                        '}';
+            }
+        }
+
+        class MovieManager {
+            private final int capacity;
+
+            MovieManager(int capacity) {
+                this.capacity = capacity;
+            }
+
+            //private final PriorityQueue<Movie> movies = new PriorityQueue<>((m1, m2) -> m1.views - m2.views);
+            private final PriorityQueue<Movie> movies = new PriorityQueue<>(Comparator.comparingInt(m -> m.views));
+
+            public void addMovie(Movie movie) {
+                movies.add(movie);
+                while (movies.size() > capacity) {
+                    movies.poll();
+                }
+            }
+
+            public List<Movie> getMovies() {
+                List<Movie> list = new ArrayList<>(movies);
+                Collections.reverse(list);
+                return list;
+            }
+        }
+
+
+        Movie xs = new Movie(1, 1);
+        Movie s = new Movie(2, 2);
+        Movie m = new Movie(3, 5);
+        Movie l = new Movie(4, 10);
+        Movie xl = new Movie(7, 50);
+        Movie xxl = new Movie(8, 100);
+        Movie xxl1 = new Movie(9, 100);
+        Movie xxl2 = new Movie(10, 100);
+
+        MovieManager movieManager = new MovieManager(5);
+        movieManager.addMovie(s);
+        movieManager.addMovie(xxl);
+        movieManager.addMovie(xs);
+        movieManager.addMovie(l);
+        movieManager.addMovie(xl);
+        movieManager.addMovie(m);
+        movieManager.addMovie(xxl1);
+        movieManager.addMovie(xxl2);
+
+        System.out.println(movieManager.getMovies());
 
     }
 
