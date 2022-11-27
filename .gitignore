@@ -1,4 +1,12 @@
+#ts, js, angular
 node_modules
 *.log
 public/
 .idea
+
+#java
+target
+.classpath
+.project
+.settings
+*.iml
