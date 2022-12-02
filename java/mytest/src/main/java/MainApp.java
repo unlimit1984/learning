@@ -12,10 +12,31 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
+import java.util.TreeMap;
 
 /**
  * Created by Vladimir_Vysokomorny on 11-Jan-18.
  */
+
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+
+    TreeNode() {
+    }
+
+    TreeNode(int val) {
+        this.val = val;
+    }
+
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+
 public class MainApp {
     public static void main(String[] args) throws URISyntaxException {
 //        System.out.println(Kata.getMiddle("1"));
@@ -205,7 +226,7 @@ public class MainApp {
         Integer[] arr = new Integer[]{0, 1, 2, 3, 4, 5};
 
         Arrays.sort(arr, Comparator.reverseOrder());
-        Integer[] subarray = Arrays.copyOfRange(arr, 2,5);
+        Integer[] subarray = Arrays.copyOfRange(arr, 2, 5);
 
         System.out.println(Arrays.toString(arr));
 //        System.out.println(Arrays.toString(subarray));
@@ -342,6 +363,86 @@ public class MainApp {
 
         System.out.println(movieManager.getMovies());
 
+        TreeNode node = new TreeNode();
+//        boolean isTreeBinary = MainApp.isTreeBinary(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+
+//--------------------------
+
+        class AudioLevel {
+            final TreeMap<Integer, Integer> map = new TreeMap<>(Collections.reverseOrder());
+            final Queue<Integer> q = new LinkedList<>();
+
+            final int size;
+
+            public AudioLevel(int size) {
+                this.size = size;
+            }
+
+            int getMax() {
+                if (!map.isEmpty()) {
+                    return map.firstKey();
+                } else {
+                    return -1;
+                }
+            }
+
+            void push(int value) {
+                q.add(value);
+
+                int newCount = 1;
+
+                if (map.containsKey(value)) {
+                    newCount = map.get(value);
+                    newCount++;
+                }
+                map.put(value, newCount);
+
+                Integer polled = null;
+                if (q.size() > this.size) {
+                    polled = q.poll();
+                }
+                if (polled != null) {
+                    int count = map.get(polled);
+                    count--;
+                    if (count == 0) {
+                        map.remove(polled);
+                    } else {
+                        map.put(polled, count);
+                    }
+                }
+            }
+
+            void printStatus() {
+                System.out.printf("Array: %s, Max: %d  %n", q, getMax());
+            }
+        }
+        AudioLevel a = new AudioLevel(5);
+        System.out.println(a.getMax());
+        a.push(6);
+        a.push(6);
+        a.push(3);
+        a.push(4);
+        a.push(5);
+        a.printStatus();
+        a.push(2);
+        a.printStatus();
+        a.push(5);
+        a.printStatus();
+        a.push(6);
+        a.push(9);
+        a.printStatus();
+    }
+
+    private static boolean isTreeBinary(TreeNode root, int left, int right) {
+        if (root == null) {
+            return true;
+        }
+
+        if (root.val < left || root.val > right) {
+            return false;
+        }
+
+        return isTreeBinary(root.left, left, root.val) && isTreeBinary(root.right, root.val, right);
     }
 
 //    private static int romanToInt(String s) {
