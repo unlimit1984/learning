@@ -1,17 +1,11 @@
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
-import java.util.Set;
-import java.util.Stack;
 import java.util.TreeMap;
 
 /**
@@ -222,6 +216,9 @@ public class MainApp {
 
 //        System.out.println(Character.getNumericValue('7'));
 //--------------------------
+
+//        LEARNING Arrays.copyOfRange, Set, Map, Stack, Queue, PriorityQueue
+/*
 //        int[] arr = new int[]{0, 1, 2, 3, 4, 5};
         Integer[] arr = new Integer[]{0, 1, 2, 3, 4, 5};
 
@@ -297,8 +294,24 @@ public class MainApp {
         while (!priorityQueue.isEmpty()) {
             System.out.println(priorityQueue.poll());
         }
+*/
+        /*
+            Okko (2022.11.25 Сергей Н.)
+            Задача №1:
+            Проверить, что дерево есть binary
+        */
+        /*
+        TreeNode root = new TreeNode();
+        boolean isTreeBinary = MainApp.isTreeBinary(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        */
 
 
+        /*
+            Okko (2022.11.25 Сергей Н.)
+            Задача №2:
+            Показать K популярных фильмов
+        */
+        /*
         class Movie {
             final int views;
             final int id;
@@ -362,12 +375,79 @@ public class MainApp {
         movieManager.addMovie(xxl2);
 
         System.out.println(movieManager.getMovies());
+        */
+        /*
+            Okko (2022.11.25 Сергей Н.)
+            Задача №3:
+            Проверить, что можно принять следующий звонок,
+            если дано количество звонком, которое може обслужиться в заданном интервале.
+        */
+        /*
+        class Limiter {
+            long millis;
+            int maxCalls;
 
-        TreeNode node = new TreeNode();
-//        boolean isTreeBinary = MainApp.isTreeBinary(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+            Queue<Long> queue = new LinkedList<>();
+
+            public Limiter(int maxCalls, long perMillis)  {
+                this.millis = perMillis;
+                this.maxCalls = maxCalls;
+            }
+
+            public boolean checkLimit() {
+                long currentMillis = Time.getCurrentMillis();
+                long startMillis = currentTime - this.millis;
+
+                while(!queue.isEmpty){
+                    long call = queue.first();
+                    if(call < startMillis) {
+                        queue.pop();
+                    } else{
+                        break;
+                    }
+                }
+                if(queue.size<maxCalls){
+                    queue.push(currentMillis);
+                    return true;
+                }
+                return false;
+            }
+
+
+            public static void main(String... args) throws Exception {
+                Limiter limiter = new Limiter(2, 1000);
+
+                if (!limiter.checkLimit()) {
+                    throw new IllegalStateException("Should pass 1st");
+                }
+                if (!limiter.checkLimit()) {
+                    throw new IllegalStateException("Should pass 2nd");
+                }
+                if (limiter.checkLimit()) {
+                    throw new IllegalStateException("Should not pass 3rd");
+                }
+            }
+        }
+         */
+
+        /*
+         * 0 - 1 --true
+         * 444 - 2 --true
+         * 888 - 3 --false
+         * 1001 - 4  --true
+         */
+
+/*
+
 
 //--------------------------
 
+        /*
+            VK (2022.11.25 Сергей Н.)
+            Задача:
+            Поступают сигналы, надо возвращать максимальное, которое пришло за последние N раз
+        */
+/*
         class AudioLevel {
             final TreeMap<Integer, Integer> map = new TreeMap<>(Collections.reverseOrder());
             final Queue<Integer> q = new LinkedList<>();
@@ -416,6 +496,56 @@ public class MainApp {
                 System.out.printf("Array: %s, Max: %d  %n", q, getMax());
             }
         }
+*/
+        class AudioLevel {
+            final TreeMap<Integer, Integer> map = new TreeMap<>(Collections.reverseOrder());
+            final Queue<Integer> q = new LinkedList<>();
+
+            final int size;
+
+            public AudioLevel(int size) {
+                this.size = size;
+            }
+
+            int getMax() {
+                if (!map.isEmpty()) {
+                    return map.firstKey();
+                } else {
+                    return -1;
+                }
+            }
+
+            void push(int value) {
+                q.add(value);
+
+                int newCount = 1;
+
+                if (map.containsKey(value)) {
+                    newCount = map.get(value);
+                    newCount++;
+                }
+                map.put(value, newCount);
+
+                Integer polled = null;
+                if (q.size() > this.size) {
+                    polled = q.poll();
+                }
+                if (polled != null) {
+                    int count = map.get(polled);
+                    count--;
+                    if (count == 0) {
+                        map.remove(polled);
+                    } else {
+                        map.put(polled, count);
+                    }
+                }
+            }
+
+            void printStatus() {
+                System.out.printf("Array: %s, Max: %d  %n", q, getMax());
+            }
+        }
+
         AudioLevel a = new AudioLevel(5);
         System.out.println(a.getMax());
         a.push(6);
@@ -431,6 +561,95 @@ public class MainApp {
         a.push(6);
         a.push(9);
         a.printStatus();
+
+
+        /*
+        Google-3 - 2022.12.06
+        Надо написать class Shuffler для музыкального плейлиста, который должен работать следующим образом.
+        Пользователь настраивает плейлист с параметром K.
+        При прослушивании следующей песни, не должна встретиться композиция, которая играла предыдущие K раз.
+        Реализовать метод, который включит пользователю следующую музыку.
+        При это все песни должны выбираться случайным образом.
+        */
+        /*
+        class Shuffler {
+            final String[] allSongs;
+            final Queue<Integer> blockedSongs = new LinkedList<>();
+            final Map<Integer, Integer> availableSongs = new HashMap<>();
+            final int K;
+            final Random random = new Random();
+
+            public Shuffler(String[] songs, int K) {
+                if (songs == null || songs.length == 0 || songs.length <= K) {
+                    throw new RuntimeException("Try again!");
+                }
+                this.allSongs = songs;
+                this.K = K;
+
+                for (int i = 0; i < songs.length; i++) {
+                    this.availableSongs.put(i, i);
+                }
+            }
+
+            public String getSong() {
+                int randomIndex = random.ints(0, this.availableSongs.size() - 1)
+                        .findFirst().getAsInt();
+                int realIndex = this.availableSongs.remove(randomIndex);
+
+                this.blockedSongs.add(realIndex);
+
+                if (this.blockedSongs.size() == K + 1) {
+                    int oldIndexSong = this.blockedSongs.poll();
+                    this.availableSongs.put(randomIndex, oldIndexSong);
+                } else if (randomIndex != this.availableSongs.size()) {
+                    int lastRealIndex = this.availableSongs.remove(this.availableSongs.size());
+                    this.availableSongs.put(randomIndex, lastRealIndex);
+                }
+                return this.allSongs[realIndex];
+            }
+
+            void printStatus() {
+                List<String> convertedBlockedSongs = blockedSongs.stream().map(index -> allSongs[index]).collect(Collectors.toList());
+                List<String> convertedAvailableSongs = availableSongs.values().stream().map(index -> allSongs[index]).collect(Collectors.toList());
+
+                System.out.printf("Blocked songs: %s, Available songs: %s %n", convertedBlockedSongs, convertedAvailableSongs);
+            }
+        }
+        Shuffler shuffler = new Shuffler(new String[]{"A", "B", "C", "D", "E", "F", "G"}, 2);
+        shuffler.printStatus();
+        System.out.println(shuffler.getSong());
+        shuffler.printStatus();
+        System.out.println(shuffler.getSong());
+        shuffler.printStatus();
+        System.out.println(shuffler.getSong());
+        shuffler.printStatus();
+        System.out.println(shuffler.getSong());
+        shuffler.printStatus();
+        System.out.println(shuffler.getSong());
+        shuffler.printStatus();
+        System.out.println(shuffler.getSong());
+        shuffler.printStatus();
+        System.out.println(shuffler.getSong());
+        shuffler.printStatus();
+        System.out.println(shuffler.getSong());
+        shuffler.printStatus();
+        System.out.println(shuffler.getSong());
+        shuffler.printStatus();
+        System.out.println(shuffler.getSong());
+        shuffler.printStatus();
+        System.out.println(shuffler.getSong());
+        shuffler.printStatus();
+        System.out.println(shuffler.getSong());
+        shuffler.printStatus();
+        System.out.println(shuffler.getSong());
+        shuffler.printStatus();
+        System.out.println(shuffler.getSong());
+        shuffler.printStatus();
+        System.out.println(shuffler.getSong());
+        shuffler.printStatus();
+        System.out.println(shuffler.getSong());
+        */
+
     }
 
     private static boolean isTreeBinary(TreeNode root, int left, int right) {
