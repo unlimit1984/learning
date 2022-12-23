@@ -51,7 +51,7 @@
 // ---------------------------------------------------------------------------
 
 //10
-import { Observable, Subscriber } from 'rxjs';
+import { interval, Observable, Subscriber, take, timeInterval } from 'rxjs';
 
 // const observable$ = new Observable<string>(subscriber => {
 //   console.log('Observable executed');
@@ -205,3 +205,57 @@ observable.subscribe({
   complete: () => console.log('Completed')
 });
 console.log('After subscribe');
+
+//29 - Cancellation - Unsubscribe
+
+//Task: emits 7 times, then stop
+
+//My solution 1
+// const interval$ = new Observable<number>(subscriber => {
+//     let counter = 1;
+//     setInterval(() => {
+//         subscriber.next(counter++);
+//     },1000);
+//
+//     setTimeout(() => {
+//         subscriber.complete();
+//     }, 7000);
+// });
+//
+// interval$.subscribe({
+//     next: value => console.log(value),
+//     error: err => console.log(err.message),
+//     complete: () => console.log('Completed')
+// });
+
+//My solution 2
+// const interval$ = new Observable<number>(subscriber => {
+//     let counter = 1;
+//     setInterval(() => {
+//         subscriber.next(counter++);
+//     },1000);
+// });
+//
+// interval$.pipe(take(7)).subscribe(
+//     value => console.log(value),
+// );
+
+//Udemy solution
+// const interval$ = new Observable<number>(subscriber => {
+//   let counter = 1;
+//   const intervalId = setInterval(() => {
+//     console.log('Emitted');
+//     subscriber.next(counter++);
+//   }, 1000);
+//
+//   return () => {
+//     clearInterval(intervalId);
+//   };
+// });
+//
+// const subscription = interval$.subscribe(value => console.log(value));
+//
+// setTimeout(() => {
+//   console.log('Unsubscribe');
+//   subscription.unsubscribe();
+// }, 7000);
