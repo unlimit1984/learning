@@ -467,27 +467,27 @@ public class MainApp {
             }
 
             void push(int value) {
-                q.add(value);
+                q.add(value);                   // O(1)
 
                 int newCount = 1;
 
-                if (map.containsKey(value)) {
-                    newCount = map.get(value);
+                if (map.containsKey(value)) {   // O(1)
+                    newCount = map.get(value);  // O(1)
                     newCount++;
                 }
-                map.put(value, newCount);
+                map.put(value, newCount);       // O(logN)
 
                 Integer polled = null;
                 if (q.size() > this.size) {
-                    polled = q.poll();
+                    polled = q.poll();          // O(1)
                 }
                 if (polled != null) {
-                    int count = map.get(polled);
+                    int count = map.get(polled);// O(logN)
                     count--;
                     if (count == 0) {
-                        map.remove(polled);
+                        map.remove(polled);     // O(logN)
                     } else {
-                        map.put(polled, count);
+                        map.put(polled, count); // O(logN)
                     }
                 }
             }
