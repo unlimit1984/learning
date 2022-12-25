@@ -51,7 +51,7 @@
 // ---------------------------------------------------------------------------
 
 //10
-import { interval, Observable, Subscriber, take, timeInterval } from 'rxjs';
+// import { interval, Observable, Subscriber, take, timeInterval } from 'rxjs';
 
 // const observable$ = new Observable<string>(subscriber => {
 //   console.log('Observable executed');
@@ -261,9 +261,31 @@ import { interval, Observable, Subscriber, take, timeInterval } from 'rxjs';
 // }, 7000);
 
 //32 - Cold observable https://random-data-api.com/
-import { ajax } from 'rxjs/ajax';
-const ajax$ = ajax<any>('https://random-data-api.com/api/v2/users');
+// import { ajax } from 'rxjs/ajax';
+// const ajax$ = ajax<any>('https://random-data-api.com/api/v2/users');
+//
+// ajax$.subscribe(data => console.log('Sub 1:', data.response.first_name));
+// ajax$.subscribe(data => console.log('Sub 2:', data.response.first_name));
+// ajax$.subscribe(data => console.log('Sub 3:', data.response.first_name));
 
-ajax$.subscribe(data => console.log('Sub 1:', data.response.first_name));
-ajax$.subscribe(data => console.log('Sub 2:', data.response.first_name));
-ajax$.subscribe(data => console.log('Sub 3:', data.response.first_name));
+//33 - Hot observable -
+// import { Observable } from 'rxjs';
+//
+// const helloButton = document.querySelector('button#hello');
+//
+// const helloClick$ = new Observable<MouseEvent>(subscriber => {
+//   helloButton.addEventListener('click', (event: MouseEvent) => {
+//     subscriber.next(event);
+//   });
+// });
+//
+// helloClick$.subscribe(event => {
+//   console.log('Sub 1:', event.type, event.x, event.y);
+// });
+//
+// setTimeout(() => {
+//   console.log('Subscription 2 starts');
+//   helloClick$.subscribe(event => {
+//     console.log('Sub 2:', event.type, event.x, event.y);
+//   });
+// }, 5000);
