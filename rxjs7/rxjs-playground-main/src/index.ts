@@ -290,7 +290,7 @@
 //   });
 // }, 5000);
 
-//37 - of function
+//37 - of Creation Function
 //import {from, Observable, of} from 'rxjs';
 
 // of('Alice', 'Ben', 'Charlie').subscribe({
@@ -327,7 +327,7 @@
 //   complete: () => console.log('Completed')
 // });
 
-//38 - from function
+//38 - from Creation Function
 // import { from } from 'rxjs';
 
 //with array
@@ -346,4 +346,47 @@
 //   error: err => console.log('Error:', err),
 //   complete: () => console.log('Completed')
 // });
+
+//39 - fromEvent Creation Function
+//Take events from DOM EventTarget, Node.js EventEmitter, jQuery Events
+
+// import { fromEvent, Observable } from 'rxjs';
+//
+// const helloButton = document.querySelector('button#hello');
+
+// const subscription = fromEvent<MouseEvent>(helloButton, 'click').subscribe({
+//   next: event => console.log(event.type, event.y, event.y),
+//   error: err => console.log('Error:', err),
+//   complete: () => console.log('Completed')
+// });
+//
+// setTimeout(() => {
+//   console.log('Unsubscribe');
+//   subscription.unsubscribe();
+// }, 5000);
+
+//OR our alternative version
+// const click$ = new Observable<MouseEvent>(subscriber => {
+//   const clickHandlerFn = (event: MouseEvent) => {
+//     console.log('Event callback executed');
+//     subscriber.next(event);
+//   };
+//
+//   helloButton.addEventListener('click', clickHandlerFn);
+//
+//   //for removing memory leaks
+//   return () => {
+//     helloButton.removeEventListener('click', clickHandlerFn);
+//   };
+// });
+//
+// const subscription = click$.subscribe({
+//   next: event => console.log(event.type, event.y, event.y),
+//   error: err => console.log('Error:', err),
+//   complete: () => console.log('Completed')
+// });
+// setTimeout(() => {
+//   console.log('Unsubscribe');
+//   subscription.unsubscribe();
+// }, 5000);
 
