@@ -457,30 +457,62 @@ Prior to that, it just keeps updating the latest known values for each inner Sub
 without emitting anything.
  */
 
-import { forkJoin } from 'rxjs';
-import { ajax } from 'rxjs/internal/ajax/ajax';
-
-//Mike is from New Delhi and likes to eat pasta.
-
-const randomName$ = ajax('https://random-data-api.com/api/name/random_name');
-const randomNation$ = ajax('https://random-data-api.com/api/nation/random_nation');
-const randomFood$ = ajax('https://random-data-api.com/api/food/random_food');
-
+// import { forkJoin } from 'rxjs';
+// import { ajax } from 'rxjs/internal/ajax/ajax';
+//
+// //Mike is from New Delhi and likes to eat pasta.
+//
+// const randomName$ = ajax('https://random-data-api.com/api/name/random_name');
+// const randomNation$ = ajax('https://random-data-api.com/api/nation/random_nation');
+// const randomFood$ = ajax('https://random-data-api.com/api/food/random_food');
+//
+// // forkJoin<any>([randomName$, randomNation$, randomFood$]).subscribe({
+// //   next: ajaxResponses =>
+// //     console.log(
+// //       `${ajaxResponses[0].response.first_name} is from ${ajaxResponses[1].response.capital} and likes to eat ${ajaxResponses[2].response.dish}.`
+// //     ),
+// //   error: err => console.log('Error:', err),
+// //   complete: () => console.log('Completed')
+// // });
+//
+// //with a Destructuring assignment
 // forkJoin<any>([randomName$, randomNation$, randomFood$]).subscribe({
-//   next: ajaxResponses =>
+//   next: ([nameAjax, nationAjax, foodAjax]) =>
 //     console.log(
-//       `${ajaxResponses[0].response.first_name} is from ${ajaxResponses[1].response.capital} and likes to eat ${ajaxResponses[2].response.dish}.`
+//       `${nameAjax.response.first_name} is from ${nationAjax.response.capital} and likes to eat ${foodAjax.response.dish}.`
 //     ),
 //   error: err => console.log('Error:', err),
 //   complete: () => console.log('Completed')
 // });
 
-//with a Destructuring assignment
-forkJoin<any>([randomName$, randomNation$, randomFood$]).subscribe({
-  next: ([nameAjax, nationAjax, foodAjax]) =>
-    console.log(
-      `${nameAjax.response.first_name} is from ${nationAjax.response.capital} and likes to eat ${foodAjax.response.dish}.`
-    ),
-  error: err => console.log('Error:', err),
-  complete: () => console.log('Completed')
-});
+//43 - forkJoin Creation Function - error scenario
+// import { forkJoin, Observable } from 'rxjs';
+//
+// const a$ = new Observable(subscriber => {
+//   setTimeout(() => {
+//     subscriber.next('A');
+//     subscriber.complete();
+//   }, 5000);
+//
+//   return () => {
+//     console.log('A teardown');
+//   };
+// });
+// const b$ = new Observable(subscriber => {
+//   setTimeout(() => {
+//     subscriber.error('Failure!');
+//   }, 3000);
+//
+//   return () => {
+//     console.log('B teardown');
+//   };
+// });
+//
+// forkJoin([a$, b$]).subscribe({
+//   // next: ([a, b]) => {
+//   next: value => {
+//     console.log(value);
+//   },
+//   error: err => console.log('Error:', err),
+//   complete: () => console.log('Completed')
+// });
