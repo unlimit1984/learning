@@ -181,30 +181,30 @@ import { interval, Observable, Subscriber, take, timeInterval } from 'rxjs';
 // console.log('After subscribe');
 
 //28 - Order
-const observable = new Observable<string>(subscriber => {
-  console.log('Observable executed');
-  subscriber.next('Alice');
-  subscriber.next('Ben');
-
-  setTimeout(() => subscriber.error(new Error('Failure')), 2000);
-
-  setTimeout(() => {
-    subscriber.next('Charlie');
-    subscriber.complete();
-  }, 4000);
-
-  return () => {
-    console.log('Teardown');
-  };
-});
-
-console.log('Before subscribe');
-observable.subscribe({
-  next: value => console.log(value),
-  error: err => console.log(err.message),
-  complete: () => console.log('Completed')
-});
-console.log('After subscribe');
+// const observable = new Observable<string>(subscriber => {
+//   console.log('Observable executed');
+//   subscriber.next('Alice');
+//   subscriber.next('Ben');
+//
+//   setTimeout(() => subscriber.error(new Error('Failure')), 2000);
+//
+//   setTimeout(() => {
+//     subscriber.next('Charlie');
+//     subscriber.complete();
+//   }, 4000);
+//
+//   return () => {
+//     console.log('Teardown');
+//   };
+// });
+//
+// console.log('Before subscribe');
+// observable.subscribe({
+//   next: value => console.log(value),
+//   error: err => console.log(err.message),
+//   complete: () => console.log('Completed')
+// });
+// console.log('After subscribe');
 
 //29 - Cancellation - Unsubscribe
 
@@ -259,3 +259,11 @@ console.log('After subscribe');
 //   console.log('Unsubscribe');
 //   subscription.unsubscribe();
 // }, 7000);
+
+//32 - Cold observable https://random-data-api.com/
+import { ajax } from 'rxjs/ajax';
+const ajax$ = ajax<any>('https://random-data-api.com/api/v2/users');
+
+ajax$.subscribe(data => console.log('Sub 1:', data.response.first_name));
+ajax$.subscribe(data => console.log('Sub 2:', data.response.first_name));
+ajax$.subscribe(data => console.log('Sub 3:', data.response.first_name));
