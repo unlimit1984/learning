@@ -291,7 +291,7 @@
 // }, 5000);
 
 //37 - of function
-import { Observable, of } from 'rxjs';
+//import {from, Observable, of} from 'rxjs';
 
 // of('Alice', 'Ben', 'Charlie').subscribe({
 //   next: value => console.log(value),
@@ -326,3 +326,24 @@ import { Observable, of } from 'rxjs';
 //   next: value => console.log(value),
 //   complete: () => console.log('Completed')
 // });
+
+//38 - from function
+// import { from } from 'rxjs';
+
+//with array
+// from(['Alice', 'Ben', 'Charlie']).subscribe({
+//   next: value => console.log(value),
+//   complete: () => console.log('Completed')
+// });
+
+// const somePromise = new Promise<string>((resolve, reject) => {
+//   // resolve('Resolved!');
+//   reject('Rejected!');
+// });
+// const observableFromPromise$ = from(somePromise);
+// observableFromPromise$.subscribe({
+//   next: value => console.log(value),
+//   error: err => console.log('Error:', err),
+//   complete: () => console.log('Completed')
+// });
+
