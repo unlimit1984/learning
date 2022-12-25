@@ -450,3 +450,37 @@
 //   console.log('Unsubscribe');
 // }, 5000);
 
+//42 - forkJoin Creation Function
+/*
+'forkJoin' waits for all of the input Observables to complete before emitting anything.
+Prior to that, it just keeps updating the latest known values for each inner Subscription in its memory,
+without emitting anything.
+ */
+
+import { forkJoin } from 'rxjs';
+import { ajax } from 'rxjs/internal/ajax/ajax';
+
+//Mike is from New Delhi and likes to eat pasta.
+
+const randomName$ = ajax('https://random-data-api.com/api/name/random_name');
+const randomNation$ = ajax('https://random-data-api.com/api/nation/random_nation');
+const randomFood$ = ajax('https://random-data-api.com/api/food/random_food');
+
+// forkJoin<any>([randomName$, randomNation$, randomFood$]).subscribe({
+//   next: ajaxResponses =>
+//     console.log(
+//       `${ajaxResponses[0].response.first_name} is from ${ajaxResponses[1].response.capital} and likes to eat ${ajaxResponses[2].response.dish}.`
+//     ),
+//   error: err => console.log('Error:', err),
+//   complete: () => console.log('Completed')
+// });
+
+//with a Destructuring assignment
+forkJoin<any>([randomName$, randomNation$, randomFood$]).subscribe({
+  next: ([nameAjax, nationAjax, foodAjax]) =>
+    console.log(
+      `${nameAjax.response.first_name} is from ${nationAjax.response.capital} and likes to eat ${foodAjax.response.dish}.`
+    ),
+  error: err => console.log('Error:', err),
+  complete: () => console.log('Completed')
+});
