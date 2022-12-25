@@ -289,3 +289,40 @@
 //     console.log('Sub 2:', event.type, event.x, event.y);
 //   });
 // }, 5000);
+
+//37 - of function
+import { Observable, of } from 'rxjs';
+
+// of('Alice', 'Ben', 'Charlie').subscribe({
+//   next: value => console.log(value),
+//   complete: () => console.log('Completed')
+// });
+
+// or own impl as the same
+// const names$ = new Observable<string>(subscriber => {
+//   subscriber.next('Alice');
+//   subscriber.next('Ben');
+//   subscriber.next('Charlie');
+//   subscriber.complete();
+// });
+// names$.subscribe({
+//   next: value => console.log(value),
+//   complete: () => console.log('Completed')
+// });
+
+//or our own function with args as the same
+// function ourOwnOf(...args: string[]): Observable<string> {
+//   return new Observable<string>(subscriber => {
+//     // args.forEach(value => subscriber.next(value));
+//     //or
+//     for (let i = 0; i < args.length; i++) {
+//       subscriber.next(args[i]);
+//     }
+//     subscriber.complete();
+//   });
+// }
+//
+// ourOwnOf('Alice', 'Ben', 'Charlie').subscribe({
+//   next: value => console.log(value),
+//   complete: () => console.log('Completed')
+// });
