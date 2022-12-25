@@ -390,3 +390,32 @@
 //   subscription.unsubscribe();
 // }, 5000);
 
+//40 - timer Creation Function
+
+// import { Observable, timer } from 'rxjs';
+//
+// console.log('App started');
+//
+// const timer$ = new Observable<number>(subscriber => {
+//   const timeOutId = setTimeout(() => {
+//     console.log('Emits value');
+//     subscriber.next(0);
+//     subscriber.complete();
+//   }, 2000);
+//
+//   return () => {
+//     clearTimeout(timeOutId);
+//   };
+// });
+//
+// // const subscription = timer(2000).subscribe({
+// const subscription = timer$.subscribe({
+//   next: value => console.log(value),
+//   error: err => console.log('Error:', err),
+//   complete: () => console.log('Completed')
+// });
+//
+// setTimeout(() => {
+//   subscription.unsubscribe();
+//   console.log('Unsubscribe');
+// }, 1000);
