@@ -419,3 +419,34 @@
 //   subscription.unsubscribe();
 //   console.log('Unsubscribe');
 // }, 1000);
+
+//41 - interval Creation Function
+
+// import { interval, Observable } from 'rxjs';
+//
+// console.log('App started');
+//
+// const interval$ = new Observable<number>(subscriber => {
+//   let counter = 0;
+//   const intervalId = setInterval(() => {
+//     console.log('Emits value');
+//     subscriber.next(counter++);
+//   }, 1000);
+//
+//   return () => {
+//     clearInterval(intervalId);
+//   };
+// });
+//
+// // const subscription = interval(1000).subscribe({
+// const subscription = interval$.subscribe({
+//   next: value => console.log(value),
+//   error: err => console.log('Error:', err),
+//   complete: () => console.log('Completed')
+// });
+//
+// setTimeout(() => {
+//   subscription.unsubscribe();
+//   console.log('Unsubscribe');
+// }, 5000);
+
