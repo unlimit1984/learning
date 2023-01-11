@@ -581,3 +581,24 @@ without emitting anything.
 // const sportsNewsFeed$ = newsfeed$.pipe(filter(value => value.category === 'Sport'));
 //
 // sportsNewsFeed$.subscribe(value => console.log(value));
+
+//49 - map
+
+// import { forkJoin, map } from 'rxjs';
+// import { ajax } from 'rxjs/internal/ajax/ajax';
+//
+// //Mike is from New Delhi and likes to eat pasta.
+//
+// const randomFirstName$ = ajax<any>('https://random-data-api.com/api/name/random_name').pipe(
+//   map(value => value.response.first_name)
+// );
+// const randomCapital$ = ajax<any>('https://random-data-api.com/api/nation/random_nation').pipe(
+//   map(value => value.response.capital)
+// );
+// const randomDish$ = ajax<any>('https://random-data-api.com/api/food/random_food').pipe(
+//   map(value => value.response.dish)
+// );
+//
+// forkJoin<any>([randomFirstName$, randomCapital$, randomDish$]).subscribe(([firstName, capital, dish]) =>
+//   console.log(`${firstName} is from ${capital} and likes to eat ${dish}.`)
+// );
