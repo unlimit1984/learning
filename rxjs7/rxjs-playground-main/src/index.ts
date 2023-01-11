@@ -732,26 +732,34 @@ By doing so, the main Subscription won't receive any error or complete notificat
 so everything will keep on working.
  */
 
-import { catchError, concatMap, EMPTY, fromEvent, map, of } from 'rxjs';
-import { ajax } from 'rxjs/internal/ajax/ajax';
+// import { catchError, concatMap, EMPTY, fromEvent, map, of } from 'rxjs';
+// import { ajax } from 'rxjs/internal/ajax/ajax';
+//
+// const endpointInput: HTMLInputElement = document.querySelector('input#endpoint');
+// const fetchButton = document.querySelector('button#fetch');
+//
+// fromEvent(fetchButton, 'click')
+//   .pipe(
+//     map(() => endpointInput.value),
+//     // concatMap(value => ajax(`https://random-data-api.com/api/${value}/random_${value}`).pipe(catchError(() => EMPTY)))
+//     concatMap(value =>
+//       ajax(`https://random-data-api.com/api/${value}/random_${value}`).pipe(
+//         catchError(error => of(`Could not fetch data: ${error}`))
+//       )
+//     )
+//   )
+//   .subscribe({
+//     next: value => console.log(value),
+//     error: err => {
+//       console.log('Error:', err);
+//     },
+//     complete: () => console.log('Completed')
+//   });
 
-const endpointInput: HTMLInputElement = document.querySelector('input#endpoint');
-const fetchButton = document.querySelector('button#fetch');
+//60 - switchMap
+/*
+So, the 'concatMap' operator waited for the previous inner Subscription to finish.
+'switchMap', on the other hand, doesn't wait for that to happen.
+Instead, it just cancels the previous Subscription by unsubscribing and immediately starts a new one for the new value.
+ */
 
-fromEvent(fetchButton, 'click')
-  .pipe(
-    map(() => endpointInput.value),
-    // concatMap(value => ajax(`https://random-data-api.com/api/${value}/random_${value}`).pipe(catchError(() => EMPTY)))
-    concatMap(value =>
-      ajax(`https://random-data-api.com/api/${value}/random_${value}`).pipe(
-        catchError(error => of(`Could not fetch data: ${error}`))
-      )
-    )
-  )
-  .subscribe({
-    next: value => console.log(value),
-    error: err => {
-      console.log('Error:', err);
-    },
-    complete: () => console.log('Completed')
-  });
