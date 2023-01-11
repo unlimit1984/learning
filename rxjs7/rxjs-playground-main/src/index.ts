@@ -615,3 +615,16 @@ without emitting anything.
 //     map(value => value * 2)
 //   )
 //   .subscribe(value => console.log('Output', value));
+
+//52 - dobounceTime
+
+// import { debounceTime, fromEvent, map } from 'rxjs';
+//
+// const sliderInput = document.querySelector('input#slider');
+//
+// fromEvent(sliderInput, 'input')
+//   .pipe(
+//     debounceTime(2000),
+//     map(event => event.target['value'])
+//   )
+//   .subscribe(value => console.log(value));
