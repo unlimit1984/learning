@@ -628,3 +628,57 @@ without emitting anything.
 //     map(event => event.target['value'])
 //   )
 //   .subscribe(value => console.log(value));
+
+//53 - catchError
+
+// import { catchError, EMPTY, Observable, of } from 'rxjs';
+//
+// const failingHttpRequest$ = new Observable(subscriber => {
+//   setTimeout(() => {
+//     subscriber.error(new Error('Timeout'));
+//   }, 3000);
+// });
+//
+// console.log('App started');
+
+// failingHttpRequest$.pipe(catchError(error => of('Fallback value'))).subscribe({
+//   next: value => console.log(value),
+//   complete: () => console.log('Completed!')
+// });
+
+/*
+When the catchError's logic subscribes to this EMPTY Observable,
+it receives the complete notification instantly.
+In the result, this complete notification reaches our Observer,
+which we pass to the subscribe method over here.
+And the whole main Subscription is ended gracefully without any errors.
+*/
+// failingHttpRequest$.pipe(catchError(error => EMPTY)).subscribe({
+//   next: value => console.log(value),
+//   complete: () => console.log('Completed!')
+// });
+
+// Flattening operators
+/*
+Flattening Operator will react to a next notification by creating a new inner Subscription to the provided Observable.
+
+The complete notification won't be reemitted,
+so the whole Subscription can still work further,
+waiting for new values to be emitted by the source Observable.
+*/
+
+//55 - concatMap (static example)
+
+// import { concatMap, Observable, of } from 'rxjs';
+//
+// const source$ = new Observable(subscriber => {
+//   setTimeout(() => {
+//     subscriber.next('A');
+//   }, 2000);
+//   setTimeout(() => {
+//     subscriber.next('B');
+//   }, 5000);
+// });
+//
+// console.log('App started');
+// source$.pipe(concatMap(value => of(1, 2))).subscribe(value => console.log(value));
