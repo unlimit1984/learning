@@ -722,3 +722,36 @@ The error will also end our main/outer Subscription, so everything will stop wor
 //     },
 //     complete: () => console.log('Completed')
 //   });
+
+//58 - concatMap (dynamic HTTP request) - error handling - second proper solution
+/*
+If we would add the same 'catchError' operator configuration as previously, but directly to the inner Observable,
+we would convert this error to a complete notification at the level of the inner Subscription,
+so the 'concatMap' will see that the inner Subscription completed instead of emitting an error.
+By doing so, the main Subscription won't receive any error or complete notifications,
+so everything will keep on working.
+ */
+
+import { catchError, concatMap, EMPTY, fromEvent, map, of } from 'rxjs';
+import { ajax } from 'rxjs/internal/ajax/ajax';
+
+const endpointInput: HTMLInputElement = document.querySelector('input#endpoint');
+const fetchButton = document.querySelector('button#fetch');
+
+fromEvent(fetchButton, 'click')
+  .pipe(
+    map(() => endpointInput.value),
+    // concatMap(value => ajax(`https://random-data-api.com/api/${value}/random_${value}`).pipe(catchError(() => EMPTY)))
+    concatMap(value =>
+      ajax(`https://random-data-api.com/api/${value}/random_${value}`).pipe(
+        catchError(error => of(`Could not fetch data: ${error}`))
+      )
+    )
+  )
+  .subscribe({
+    next: value => console.log(value),
+    error: err => {
+      console.log('Error:', err);
+    },
+    complete: () => console.log('Completed')
+  });
