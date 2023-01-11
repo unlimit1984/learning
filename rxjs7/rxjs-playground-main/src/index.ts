@@ -336,9 +336,10 @@
 //   complete: () => console.log('Completed')
 // });
 
+// /* resolve => next, reject=>error */
 // const somePromise = new Promise<string>((resolve, reject) => {
-//   // resolve('Resolved!');
-//   reject('Rejected!');
+//   resolve('Resolved!');
+//   // reject('Rejected!');
 // });
 // const observableFromPromise$ = from(somePromise);
 // observableFromPromise$.subscribe({
@@ -457,7 +458,7 @@ Prior to that, it just keeps updating the latest known values for each inner Sub
 without emitting anything.
  */
 
-// import { forkJoin } from 'rxjs';
+// import { forkJoin, Observable, of } from 'rxjs';
 // import { ajax } from 'rxjs/internal/ajax/ajax';
 //
 // //Mike is from New Delhi and likes to eat pasta.
@@ -465,6 +466,11 @@ without emitting anything.
 // const randomName$ = ajax('https://random-data-api.com/api/name/random_name');
 // const randomNation$ = ajax('https://random-data-api.com/api/nation/random_nation');
 // const randomFood$ = ajax('https://random-data-api.com/api/food/random_food');
+// // const randomFood$ = of({ response: { dish: '123' } }, { response: { dish: 'abc' } });
+// // const randomFood$ = new Observable(subscriber => {
+// //   // subscriber.error('Failure!');
+// //   subscriber.complete();
+// // });
 //
 // // forkJoin<any>([randomName$, randomNation$, randomFood$]).subscribe({
 // //   next: ajaxResponses =>
@@ -518,27 +524,60 @@ without emitting anything.
 // });
 
 //44 - combineLatest Creation Function
-import { combineLatest, fromEvent } from 'rxjs';
+// import { combineLatest, fromEvent } from 'rxjs';
+//
+// const temperatureInput = document.getElementById('temperature-input');
+// const conversionDropdown = document.getElementById('conversion-dropdown');
+// const resultText = document.getElementById('result-text');
+//
+// const temperatureInputEvent$ = fromEvent(temperatureInput, 'input');
+// const conversionInputEvent$ = fromEvent(conversionDropdown, 'input');
+//
+// combineLatest([temperatureInputEvent$, conversionInputEvent$]).subscribe(
+//   ([temperatureInputEvent, conversionInputEvent]) => {
+//     const temperature = Number(temperatureInputEvent.target['value']);
+//     const conversion = conversionInputEvent.target['value'];
+//
+//     let result: number;
+//     if (conversion === 'f-to-c') {
+//       result = ((temperature - 32) * 5) / 9;
+//     } else if (conversion === 'c-to-f') {
+//       result = (temperature * 9) / 5 + 32;
+//     }
+//
+//     resultText.innerText = String(result);
+//   }
+// );
 
-const temperatureInput = document.getElementById('temperature-input');
-const conversionDropdown = document.getElementById('conversion-dropdown');
-const resultText = document.getElementById('result-text');
+//Pipeable operators
 
-const temperatureInputEvent$ = fromEvent(temperatureInput, 'input');
-const conversionInputEvent$ = fromEvent(conversionDropdown, 'input');
+//48 - filter
 
-combineLatest([temperatureInputEvent$, conversionInputEvent$]).subscribe(
-  ([temperatureInputEvent, conversionInputEvent]) => {
-    const temperature = Number(temperatureInputEvent.target['value']);
-    const conversion = conversionInputEvent.target['value'];
-
-    let result: number;
-    if (conversion === 'f-to-c') {
-      result = ((temperature - 32) * 5) / 9;
-    } else if (conversion === 'c-to-f') {
-      result = (temperature * 9) / 5 + 32;
-    }
-
-    resultText.innerText = String(result);
-  }
-);
+// import { filter, Observable } from 'rxjs';
+//
+// interface NewsItem {
+//   category: 'Business' | 'Sport';
+//   content: string;
+// }
+//
+// const newsfeed$ = new Observable<NewsItem>(subscriber => {
+//   setTimeout(() => {
+//     subscriber.next({ category: 'Business', content: 'A' });
+//   }, 1000);
+//   setTimeout(() => {
+//     subscriber.next({ category: 'Sport', content: 'B' });
+//   }, 3000);
+//   setTimeout(() => {
+//     subscriber.next({ category: 'Business', content: 'C' });
+//   }, 4000);
+//   setTimeout(() => {
+//     subscriber.next({ category: 'Sport', content: 'D' });
+//   }, 6000);
+//   setTimeout(() => {
+//     subscriber.next({ category: 'Business', content: 'E' });
+//   }, 7000);
+// });
+//
+// const sportsNewsFeed$ = newsfeed$.pipe(filter(value => value.category === 'Sport'));
+//
+// sportsNewsFeed$.subscribe(value => console.log(value));
