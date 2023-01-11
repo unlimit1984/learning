@@ -763,3 +763,7 @@ So, the 'concatMap' operator waited for the previous inner Subscription to finis
 Instead, it just cancels the previous Subscription by unsubscribing and immediately starts a new one for the new value.
  */
 
+//61 - mergeMap
+/*
+'mergeMap' emits the values to the output whenever any of the inner Subscriptions receive some value.
+ */
