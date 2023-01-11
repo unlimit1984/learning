@@ -697,3 +697,28 @@ waiting for new values to be emitted by the source Observable.
 //     concatMap(value => ajax(`https://random-data-api.com/api/${value}/random_${value}`))
 //   )
 //   .subscribe(value => console.log(value));
+
+//57 - concatMap (dynamic HTTP request) - error handling - first solution with completing the main subscription
+/*
+The error will also end our main/outer Subscription, so everything will stop working.
+ */
+
+// import { catchError, concatMap, EMPTY, fromEvent, map } from 'rxjs';
+// import { ajax } from 'rxjs/internal/ajax/ajax';
+//
+// const endpointInput: HTMLInputElement = document.querySelector('input#endpoint');
+// const fetchButton = document.querySelector('button#fetch');
+//
+// fromEvent(fetchButton, 'click')
+//   .pipe(
+//     map(() => endpointInput.value),
+//     concatMap(value => ajax(`https://random-data-api.com/api/${value}/random_${value}`)),
+//     catchError(() => EMPTY) //incorrect approach
+//   )
+//   .subscribe({
+//     next: value => console.log(value),
+//     error: err => {
+//       console.log('Error:', err);
+//     },
+//     complete: () => console.log('Completed')
+//   });
