@@ -602,3 +602,16 @@ without emitting anything.
 // forkJoin<any>([randomFirstName$, randomCapital$, randomDish$]).subscribe(([firstName, capital, dish]) =>
 //   console.log(`${firstName} is from ${capital} and likes to eat ${dish}.`)
 // );
+
+//50 - tap
+//tap works only if we subscribe
+// import { filter, map, of, tap } from 'rxjs';
+//
+// of(1, 7, 3, 6, 2)
+//   .pipe(
+//     filter(value => value > 5),
+//     tap(value => console.log('Spy:', value)),
+//     //tap({ next: value => console.log('Spy:', value), error: err => {}, complete: () => {} }),
+//     map(value => value * 2)
+//   )
+//   .subscribe(value => console.log('Output', value));
