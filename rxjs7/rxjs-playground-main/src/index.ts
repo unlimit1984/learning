@@ -682,3 +682,18 @@ waiting for new values to be emitted by the source Observable.
 //
 // console.log('App started');
 // source$.pipe(concatMap(value => of(1, 2))).subscribe(value => console.log(value));
+
+//56 - concatMap (dynamic HTTP request)
+
+// import { concatMap, fromEvent, map } from 'rxjs';
+// import { ajax } from 'rxjs/internal/ajax/ajax';
+//
+// const endpointInput: HTMLInputElement = document.querySelector('input#endpoint');
+// const fetchButton = document.querySelector('button#fetch');
+//
+// fromEvent(fetchButton, 'click')
+//   .pipe(
+//     map(() => endpointInput.value),
+//     concatMap(value => ajax(`https://random-data-api.com/api/${value}/random_${value}`))
+//   )
+//   .subscribe(value => console.log(value));
