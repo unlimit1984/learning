@@ -348,7 +348,7 @@
 //   complete: () => console.log('Completed')
 // });
 
-//39 - fromEvent Creation Function
+//39 - fromEvent Creation Function (hot observable)
 //Take events from DOM EventTarget, Node.js EventEmitter, jQuery Events
 
 // import { fromEvent, Observable } from 'rxjs';
@@ -767,3 +767,24 @@ Instead, it just cancels the previous Subscription by unsubscribing and immediat
 /*
 'mergeMap' emits the values to the output whenever any of the inner Subscriptions receive some value.
  */
+
+//Subjects
+
+//67 - Subject
+
+// import { fromEvent, map, Subject } from 'rxjs';
+//
+// const emitButton = document.querySelector('button#emit');
+// const inputElement: HTMLInputElement = document.querySelector('#value-input');
+// const subscribeButton = document.querySelector('button#subscribe');
+//
+// const value$ = new Subject<string>();
+//
+// fromEvent(emitButton, 'click')
+//   .pipe(map(() => inputElement.value))
+//   .subscribe(value$);
+//
+// fromEvent(subscribeButton, 'click').subscribe(() => {
+//   console.log('New Subscription');
+//   value$.subscribe(value => console.log(value));
+// });
