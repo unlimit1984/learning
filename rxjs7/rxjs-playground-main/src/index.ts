@@ -788,3 +788,35 @@ Instead, it just cancels the previous Subscription by unsubscribing and immediat
 //   console.log('New Subscription');
 //   value$.subscribe(value => console.log(value));
 // });
+
+//69 - BehaviorSubject
+
+import { BehaviorSubject, fromEvent, Subject, withLatestFrom } from 'rxjs';
+
+const loggedInSpan: HTMLElement = document.querySelector('span#logged-in');
+const loginButton: HTMLElement = document.querySelector('button#login');
+const logoutButton: HTMLElement = document.querySelector('button#logout');
+const printStateButton: HTMLElement = document.querySelector('button#print-state');
+
+// const isLoggedIn$ = new Subject<boolean>();
+const isLoggedIn$ = new BehaviorSubject<boolean>(false);
+fromEvent(loginButton, 'click').subscribe(value => isLoggedIn$.next(true));
+fromEvent(logoutButton, 'click').subscribe(value => isLoggedIn$.next(false));
+
+// Navigation bar
+isLoggedIn$.subscribe(isLoggedIn => {
+  // console.log('isLoggedIn', isLoggedIn);
+  loggedInSpan.innerText = isLoggedIn.toString();
+});
+
+// Buttons
+isLoggedIn$.subscribe(isLoggedIn => {
+  logoutButton.style.display = isLoggedIn ? 'block' : 'none';
+  loginButton.style.display = !isLoggedIn ? 'block' : 'none';
+});
+
+// fromEvent(printStateButton, 'click').subscribe(() => console.log('User is logged in:', isLoggedIn$.value));
+//OR
+fromEvent(printStateButton, 'click')
+  .pipe(withLatestFrom(isLoggedIn$))
+  .subscribe(([event, isLoggedIn]) => console.log('User is logged in:', isLoggedIn));
