@@ -352,4 +352,65 @@ function logTimeStamp<T extends TimeStamp>(num: T): T {
     return num;
 }
 
+//19 - Manipulations with types (keyof)
 
+type Point1 = { x: number, y: number };
+type P = keyof Point1
+let pp: P;
+// pp = 'z';
+pp = 'x';
+
+function MyF() {
+    return { a: 1 };
+}
+type K = ReturnType<typeof MyF>
+
+type MyFType = () => { a: number }
+type K2 = ReturnType<MyFType>
+
+const MyArray = [
+    { name: 'Vasia', age: 30}
+];
+
+type Person = typeof MyArray[number];
+type Age = typeof MyArray[number]['age'];
+
+type MessageOf<T> = T extends { message: unknown} ? T['message'] : never
+interface Email {
+    message: string;
+}
+interface Cat {
+    test: number;
+}
+
+type EmailMessageContents = MessageOf<Email>
+type CatMessageContents = MessageOf<Cat>
+
+const email: EmailMessageContents = 'my@mail.com';
+// const cat1: CatMessageContents = '1234';
+// const cat2: CatMessageContents = 1234;
+
+
+interface Test2 {
+    [key: string]: number;
+}
+const test22: Test2 = {
+    some1: 1,
+    some2: 2,
+    123: 22
+}
+
+
+type OptionFlags<Type> = {
+    [Property in keyof Type]: boolean
+}
+interface IPerson {
+    name: string;
+    age: number;
+}
+type MyPersonType = OptionFlags<IPerson>;
+//Additional for reading: https://blog.logrocket.com/how-to-use-keyof-operator-typescript
+
+
+type world = 'world';
+type Greeting = `hello ${world}`;
