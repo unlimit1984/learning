@@ -299,3 +299,57 @@ function ruDice(dice: Dice) {
     }
 }
 */
+
+//18 - Generics
+
+// function logTime(num: number): number {
+//     console.log(new Date());
+//     return num;
+// }
+// function logTime2(num: string): string {
+//     console.log(new Date());
+//     return num;
+// }
+
+function logTime<T>(num: T): T {
+    console.log(new Date());
+    return num;
+}
+logTime<string>('asd');
+logTime<number>(123);
+
+function logTime2<T>(num: T): T {
+    console.log(new Date());
+    if(typeof num == 'string'){
+        num.toLocaleUpperCase();
+    }
+    return num;
+}
+
+// interface MyInterface {
+//     transform: (a: number) => number
+// }
+
+// interface MyInterface {
+//     transform: <T>(a: T) => T
+// }
+
+interface MyInterface {
+    transform: <T, F>(a: T) => F
+}
+
+class MyGenClass<T> {
+    value: T
+}
+const my = new MyGenClass<number>();
+
+interface TimeStamp {
+    stamp: number;
+}
+
+function logTimeStamp<T extends TimeStamp>(num: T): T {
+    console.log(num.stamp)
+    return num;
+}
+
+
