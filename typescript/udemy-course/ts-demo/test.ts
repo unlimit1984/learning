@@ -155,3 +155,81 @@ function performAction2(action: actionType | ComplexAction) {
             return -1;
     }
 }
+
+//16 - Classes
+
+//for "strictPropertyInitialization": true,
+// class PointC {
+//     x!: number;
+//     y!: number;
+// }
+
+class PointC {
+    readonly x: number;
+    y: number;
+
+    constructor(x: number, y: number) {
+        this.x = x;
+        this.y = y;
+    }
+
+    protected a() {
+
+    }
+}
+
+const point = new PointC(0,0);
+
+console.log(point); // 0
+
+class D3PointC extends PointC {
+
+    z: number;
+
+    constructor(x: number, y: number, z: number) {
+        super(x,y);
+        this.z = z;
+        this.a();
+    }
+
+    a(name?: string) {
+
+    }
+
+}
+
+const point2 = new D3PointC(1,1,1);
+
+class StaticTest {
+    static c = 'sdf';
+    static test(){
+
+    }
+}
+const statoicD = StaticTest.c;
+StaticTest.test();
+
+abstract class Test3 {
+    myMethod() {}
+}
+
+class Test4 extends Test3 {
+
+}
+new Test4()
+
+
+interface C {
+    test: () => void;
+    test2: () => number;
+}
+
+class D implements C {
+    test(): void {
+
+    }
+
+    test2(): number {
+        return 3;
+    }
+}
