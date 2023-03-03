@@ -1,4 +1,4 @@
-// 12 Base Types
+//12 - Base Types
 
 // const a: number  = 5;
 
@@ -47,7 +47,7 @@ function noVoidFunc(): void {
 const x: undefined = undefined;
 const z: null = null;
 
-// 13 Interfaces and Types
+//13 - Interfaces and Types
 
 type Point = {
     x: number,
@@ -107,3 +107,23 @@ console.log(c2({x: 1, y:2}));
 
 //Cast to specific type/interface
 const myCanvas = document.getElementById('canvas') as HTMLCanvasElement;
+
+//14 - Exercise - Interfaces
+
+interface Info {
+    desc: string;
+    isActive: boolean;
+}
+
+interface Tag {
+    name: string;
+    value: number;
+}
+
+interface Reply {
+    userId: number;
+    id: number;
+    title: string;
+    info: Info;
+    tags: Tag[];
+}

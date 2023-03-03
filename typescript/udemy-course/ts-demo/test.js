@@ -1,5 +1,5 @@
 "use strict";
-// 12 Base Types
+//12 - Base Types
 // const a: number  = 5;
 let a = 4;
 let b = "dadsad";
@@ -48,7 +48,9 @@ const aaa = {
 //     b: number;
 // }
 const c2 = (point) => {
-    const d = point;
+    const d = point; //cast to specific type/interface
     return d;
 };
 console.log(c2({ x: 1, y: 2 }));
+//Cast to specific type/interface
+const myCanvas = document.getElementById('canvas');
