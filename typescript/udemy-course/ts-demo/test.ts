@@ -127,3 +127,31 @@ interface Reply {
     info: Info;
     tags: Tag[];
 }
+
+//15 - Literal types
+
+let c3: 'test' = 'test'; //literak type definition
+
+type actionType = 'up' |  'down'; //literal type
+
+function performAction(action: actionType): -1 | 1 {
+    switch (action) {
+        case 'up':
+            return 1;
+        case 'down':
+            return -1;
+    }
+}
+
+interface ComplexAction {
+    s: string;
+}
+
+function performAction2(action: actionType | ComplexAction) {
+    switch (action) {
+        case 'up':
+            return 1;
+        case 'down':
+            return -1;
+    }
+}
