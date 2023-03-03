@@ -103,10 +103,10 @@ const c2 = (point: IPoint)=> {
     const d:I3DPoint = point as I3DPoint; //cast to specific type/interface
     return d;
 }
-console.log(c2({x: 1, y:2}));
+// console.log(c2({x: 1, y:2}));
 
 //Cast to specific type/interface
-const myCanvas = document.getElementById('canvas') as HTMLCanvasElement;
+// const myCanvas = document.getElementById('canvas') as HTMLCanvasElement;
 
 //14 - Exercise - Interfaces
 
@@ -180,7 +180,7 @@ class PointC {
 
 const point = new PointC(0,0);
 
-console.log(point); // 0
+// console.log(point); // 0
 
 class D3PointC extends PointC {
 
@@ -233,3 +233,69 @@ class D implements C {
         return 3;
     }
 }
+
+//17 - Enums
+
+enum Direction {
+    Up = 'UP',
+    Down = 'DOWN',
+    Left = 'LEFT',
+    Right = 'RIGHT'
+}
+
+enum Decision {
+    Yes = 1,
+    // No = 'No',
+    No2 = calcEnum()
+}
+
+function calcEnum() { //Рассчитываемые  enum-ы только числовые
+    return 2;
+}
+
+function runEnum(obj: { Up: string }) {
+
+}
+
+runEnum(Direction)
+
+//Обратный mapping => получить строковое значение какого-то из enum-ов
+
+enum TestEnum {
+    A
+}
+
+let test1 = TestEnum.A
+// console.log(test1);
+
+let nameA = TestEnum[test1];
+// console.log(nameA);
+
+//Константные enum-ы
+const enum ConstEnum {
+    A,
+    B
+}
+let c4 = ConstEnum.A;
+// console.log(c4);
+
+enum Dice {
+    One = 1,
+    Two,
+    Three
+}
+
+/*
+function ruDice(dice: Dice) {
+    switch (dice){
+        case Dice.One:
+            return 'один';
+        case Dice.Two:
+            return 'два';
+        // case Dice.Three:
+        //     return 'три';
+        default:
+            const a: never = dice;
+    }
+}
+*/
