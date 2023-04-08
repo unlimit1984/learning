@@ -650,6 +650,9 @@ public class MainApp {
         System.out.println(shuffler.getSong());
         */
 
+        double myVar = 3.5;
+        System.out.println(String.valueOf(myVar));
+
     }
 
     private static boolean isTreeBinary(TreeNode root, int left, int right) {
