@@ -11,6 +11,7 @@ export class AppController {
 
   @Get('hello')
   getHello(): string {
+  // async getHello(): Promise<string> {
     return (
       this.appService.getHello() + ' TEST=' + this.configService.get('TEST')
     );
