@@ -19,6 +19,8 @@ jobs:
 
         - name: LS -L for outer repo
           run: |
+            pwd
+            echo github.workspace=${{ github.workspace }}
             ls -l
             find
             echo secrets.GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
@@ -35,6 +37,8 @@ jobs:
 
         - name: LS -L for second repo
           run: |
+            pwd
+            echo github.workspace=${{ github.workspace }}
             ls -l
             find
           shell: bash
