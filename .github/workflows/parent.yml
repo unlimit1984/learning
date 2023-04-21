@@ -24,14 +24,27 @@ jobs:
             ls -l
             find
             echo secrets.GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
-
           shell: bash
+
+        - name: Checkout HomeExpenses - public repo
+          uses: actions/checkout@v3
+          with:
+            repository: home-expenses-github-username/home-expenses
+            path: my-he-repo
+            ref: main
+
+        - name: Checkout scroll-app - public repo
+          uses: actions/checkout@v3
+          with:
+            repository: unlimit1984/unlimit1984/scroll-app
+            path: my-scroll-app
+#            ref: master
 
         - name: Checkout private-repo
           uses: actions/checkout@v3
           with:
             repository: unlimit1984/private-repo
-            path: inner-repo
+            path: my-private-repo
             ref: main
 #            token: ${{ secrets.GITHUB_TOKEN }}
 
