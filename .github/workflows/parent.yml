@@ -1,0 +1,40 @@
+# Copyright (C) Motorola Solutions, INC.
+# All Rights Reserved.
+
+name: Monitoring - E2E - CCRouter Config UI
+
+on:
+  workflow_dispatch:
+
+jobs:
+  dev:
+    name: Run test
+    runs-on: ubuntu-20.04
+    steps:
+        - name: Checkout
+          uses: actions/checkout@v3
+          with:
+            ref: main
+            path: learning-repo
+
+        - name: LS -L for outer repo
+          run: |
+            ls -l
+            find
+            echo secrets.GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
+
+          shell: bash
+
+        - name: Checkout private-repo
+          uses: actions/checkout@v3
+          with:
+            repository: unlimit1984/private-repo
+            path: inner-repo
+            ref: main
+#            token: ${{ secrets.GITHUB_TOKEN }}
+
+        - name: LS -L for second repo
+          run: |
+            ls -l
+            find
+          shell: bash
