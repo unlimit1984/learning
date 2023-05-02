@@ -48,6 +48,7 @@ export class ReviewController {
         return this.reviewService.findByProductId(productId);
     }
 
+    // @UseGuards(JwtAuthGuard)
     @Get('findAll')
     async findAll() {
         return this.reviewService.findAll();

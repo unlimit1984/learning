@@ -1,7 +1,18 @@
-import { BadRequestException, Body, Controller, HttpCode, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+    BadRequestException,
+    Body,
+    Controller,
+    Get,
+    HttpCode,
+    Post,
+    UseGuards,
+    UsePipes,
+    ValidationPipe
+} from '@nestjs/common';
 import { ALREADY_REGISTERED_ERROR } from './auth.constants';
 import { AuthDto } from './dto/auth.dto';
 import { AuthService } from './auth.service';
+import {JwtAuthGuard} from "./guards/jwt.guard";
 
 @Controller('auth')
 export class AuthController {
@@ -26,4 +37,10 @@ export class AuthController {
         const { email } = await this.authService.validateUser(login, password);
         return this.authService.login(email);
     }
+
+    // @UseGuards(JwtAuthGuard)
+    // @Get('users')
+    // async getUsers() {
+    //     return this.authService.findAllUser();
+    // }
 }
