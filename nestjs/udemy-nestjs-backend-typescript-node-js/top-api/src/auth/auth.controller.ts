@@ -10,8 +10,8 @@ export class AuthController {
     @UsePipes(new ValidationPipe())
     @Post('register')
     async register(@Body() dto: AuthDto) {
-        const oldUser = this.authService.findUser(dto.login);
-        if (oldUser != null) {
+        const oldUser = await this.authService.findUser(dto.login);
+        if (oldUser) {
             throw new BadRequestException(ALREADY_REGISTERED_ERROR);
         }
         return this.authService.createUser(dto);
