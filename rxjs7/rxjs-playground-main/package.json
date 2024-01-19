@@ -28,6 +28,7 @@
     "webpack-dev-server": "^4.9.1"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "rxjs": "^7.4.0"
   }
 }
