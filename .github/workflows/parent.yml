@@ -1,6 +1,3 @@
-# Copyright (C) Motorola Solutions, INC.
-# All Rights Reserved.
-
 name: Monitoring - E2E - CCRouter Config UI
 
 on:
