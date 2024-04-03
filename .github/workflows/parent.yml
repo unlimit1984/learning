@@ -1,4 +1,4 @@
-name: Monitoring - E2E - CCRouter Config UI
+name: Monitoring - E2E
 
 on:
   workflow_dispatch:
