@@ -1,4 +1,4 @@
-import {afterNextRender, Component, computed, effect, inject, Injector, signal} from '@angular/core';
+import { afterNextRender, Component, computed, effect, EffectRef, inject, Injector, signal } from '@angular/core';
 import { CoursesService } from '../services/courses.service';
 import { Course, sortCoursesBySeqNo } from '../models/course.model';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
@@ -40,13 +40,30 @@ export class HomeComponent {
 
   // injector = inject(Injector);
 
+  effectRef: EffectRef | null = null;
+
   constructor() {
-    effect(() => {
-      console.log(`counter value: ${this.counter()}`);
-      // this.increment();
-    },{
-      // allowSignalWrites: false
-    });
+    this.effectRef = effect(
+      // () => {
+      (onCleanup) => {
+        const counter = this.counter();
+        const timeout = setTimeout(() => {
+          console.log(`counter value: ${counter}`);
+        }, 1000);
+
+        //The cleanup function makes it possible to "cancel" any work that the
+        // previous effect run might have started
+        onCleanup(() => {
+          console.log(`Calling cleanup`);
+          clearTimeout(timeout);
+        });
+        // console.log(`counter value: ${this.counter()}`);
+        // this.increment();
+      },
+      {
+        // allowSignalWrites: false
+      }
+    );
 
     //In case of non-standard usage provide injector for proper cleanup
     // afterNextRender(()=>{
@@ -69,5 +86,9 @@ export class HomeComponent {
 
   append() {
     this.values.update((values) => [...values, values[values.length - 1] + 1]);
+  }
+
+  cleanup() {
+    this.effectRef?.destroy();
   }
 }
