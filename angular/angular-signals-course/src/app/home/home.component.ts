@@ -29,9 +29,10 @@ import {
 })
 export class HomeComponent {
   counter = signal(0);
+  // counter = signal(0).asReadonly();
 
   increment() {
-    // this.counter++;
-    this.counter.set(this.counter() + 1);
+    // this.counter.set(this.counter() + 1);
+    this.counter.update((counter) => counter + 1);
   }
 }
