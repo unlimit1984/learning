@@ -38,22 +38,24 @@ export class HomeComponent {
 
   values = signal<number[]>([0]);
 
-  injector = inject(Injector);
+  // injector = inject(Injector);
 
   constructor() {
-    // effect(() => {
-    //   console.log(`counter value: ${this.counter()}`);
-    // });
+    effect(() => {
+      console.log(`counter value: ${this.counter()}`);
+      // this.increment();
+    },{
+      // allowSignalWrites: false
+    });
 
     //In case of non-standard usage provide injector for proper cleanup
-    afterNextRender(()=>{
-      effect(() => {
-        console.log(`counter value: ${this.counter()}`);
-      },{
-        injector: this.injector
-      });
-
-    })
+    // afterNextRender(()=>{
+    //   effect(() => {
+    //     console.log(`counter value: ${this.counter()}`);
+    //   },{
+    //     injector: this.injector
+    //   });
+    // })
   }
 
   increment() {
