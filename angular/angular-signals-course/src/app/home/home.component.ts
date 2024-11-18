@@ -20,6 +20,10 @@ import {
   outputFromObservable,
 } from '@angular/core/rxjs-interop';
 
+type Counter = {
+  value: number;
+};
+
 @Component({
   selector: 'home',
   standalone: true,
@@ -28,11 +32,18 @@ import {
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
-  counter = signal(0);
+  // counter = signal(0);
   // counter = signal(0).asReadonly();
+  counter = signal<Counter>({
+    value: 0,
+  });
 
   increment() {
     // this.counter.set(this.counter() + 1);
-    this.counter.update((counter) => counter + 1);
+    // this.counter.update((counter) => counter + 1);
+    this.counter.update((counter) => ({
+      ...counter,
+      value: counter.value + 1,
+    }));
   }
 }
