@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, Injector, signal } from '@angular/core';
+import {afterNextRender, Component, computed, effect, inject, Injector, signal} from '@angular/core';
 import { CoursesService } from '../services/courses.service';
 import { Course, sortCoursesBySeqNo } from '../models/course.model';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
@@ -38,10 +38,22 @@ export class HomeComponent {
 
   values = signal<number[]>([0]);
 
+  injector = inject(Injector);
+
   constructor() {
-    effect(() => {
-      console.log(`counter value: ${this.counter()}`);
-    });
+    // effect(() => {
+    //   console.log(`counter value: ${this.counter()}`);
+    // });
+
+    //In case of non-standard usage provide injector for proper cleanup
+    afterNextRender(()=>{
+      effect(() => {
+        console.log(`counter value: ${this.counter()}`);
+      },{
+        injector: this.injector
+      });
+
+    })
   }
 
   increment() {
