@@ -36,8 +36,13 @@ export class HomeComponent {
     return val * 10;
   });
 
-
   values = signal<number[]>([0]);
+
+  constructor() {
+    effect(() => {
+      console.log(`counter value: ${this.counter()}`);
+    });
+  }
 
   increment() {
     // this.counter.set(this.counter() + 1);
