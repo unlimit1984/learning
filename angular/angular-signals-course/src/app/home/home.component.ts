@@ -20,21 +20,32 @@ type Counter = {
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-  // counter = signal(0);
+  counter = signal(0);
   // counter = signal(0).asReadonly();
-  counter = signal<Counter>({
-    value: 0
+  // counter = signal<Counter>({
+  //   value: 0
+  // });
+
+  tenXCounter = computed(() => {
+    const val = this.counter();
+    return val * 10;
   });
+
+  hundredXCounter = computed(() => {
+    const val = this.tenXCounter();
+    return val * 10;
+  });
+
 
   values = signal<number[]>([0]);
 
   increment() {
     // this.counter.set(this.counter() + 1);
-    // this.counter.update((counter) => counter + 1);
-    this.counter.update((counter) => ({
-      ...counter,
-      value: counter.value + 1
-    }));
+    this.counter.update((counter) => counter + 1);
+    // this.counter.update((counter) => ({
+    //   ...counter,
+    //   value: counter.value + 1
+    // }));
   }
 
   append() {
