@@ -19,7 +19,8 @@ import { CoursesServiceWithFetch } from '../services/courses-fetch.service';
 export class HomeComponent implements OnInit {
   courses = signal<Course[]>([]);
 
-  coursesService = inject(CoursesServiceWithFetch);
+  // coursesService = inject(CoursesServiceWithFetch);
+  coursesService = inject(CoursesService);
 
   constructor() {
     // OPTION 1
