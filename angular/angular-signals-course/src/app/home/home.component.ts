@@ -1,4 +1,4 @@
-import { Component, computed, effect, Inject, inject, Injector, signal } from '@angular/core';
+import { afterNextRender, Component, computed, effect, Inject, inject, Injector, OnInit, signal } from '@angular/core';
 import { CoursesService } from '../services/courses.service';
 import { Course, sortCoursesBySeqNo } from '../models/course.model';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
@@ -16,13 +16,24 @@ import { CoursesServiceWithFetch } from '../services/courses-fetch.service';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   courses = signal<Course[]>([]);
 
   coursesService = inject(CoursesServiceWithFetch);
 
   constructor() {
+    // OPTION 1
     this.loadCourses().then(() => console.log(`All courses loaded`, this.courses()));
+
+    // OPTION 3
+    // afterNextRender(() => {
+    //   this.loadCourses().then(() => console.log(`All courses loaded`, this.courses()));
+    // });
+  }
+
+  // OPTION 2 with OnInit lifecycle angular hook
+  ngOnInit(): void {
+    // this.loadCourses().then(() => console.log(`All courses loaded`, this.courses()));
   }
 
   async loadCourses() {
