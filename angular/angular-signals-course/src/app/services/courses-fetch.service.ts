@@ -19,4 +19,25 @@ export class CoursesServiceWithFetch {
     // If it's a primitive type it's going to wrap it in a promise.
     return payload.courses;
   }
+
+  //==============
+  // Dmytro help
+  // async loadAllCourses2(): Promise<Course[]> {
+  //   return fetch(`${this.env.apiRoot}/courses`)
+  //     .then((response) => response.json().courses)
+  // }
+  //
+  // courses = new Promise((resolve, reject) => {
+  //   fetch(`${this.env.apiRoot}/courses`)
+  //     // .then((response) => response.json().courses);
+  //     .then((response) => resolve(response.json().courses))
+  //     .catch(err => reject(err));
+  // })
+}
+
+function* loadAllCourses3() {
+  yield [];
+  yield ['wow'];
+  yield ['wow', 'that'];
+  yield ['wow', 'that', 'generator'];
 }

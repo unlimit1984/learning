@@ -27,6 +27,7 @@ export class HomeComponent {
 
   async loadCourses() {
     try {
+      // console.log('loadCourses()');
       const courses = await this.coursesService.loadAllCourses();
       this.courses.set(courses);
     } catch (err) {
