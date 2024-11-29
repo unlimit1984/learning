@@ -17,6 +17,7 @@ import { CoursesServiceWithFetch } from '../services/courses-fetch.service';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
+  // # is a private modifier
   #courses = signal<Course[]>([]);
 
   // coursesService = inject(CoursesServiceWithFetch);
