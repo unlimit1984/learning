@@ -11,5 +11,10 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrl: './courses-card-list.component.scss'
 })
 export class CoursesCardListComponent {
+  // courses = input<Course[]>([],{
+  //   alias: 'data',
+  //   transform:
+  // });
+
   courses = input.required<Course[]>();
 }
