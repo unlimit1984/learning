@@ -56,7 +56,7 @@ export class HomeComponent implements OnInit {
     try {
       // console.log('loadCourses()');
       const courses = await this.coursesService.loadAllCourses();
-      this.#courses.set(courses);
+      this.#courses.set(courses.sort(sortCoursesBySeqNo));
     } catch (err) {
       alert(`Error loading courses!`);
       console.error(err);
