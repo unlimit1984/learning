@@ -1,5 +1,10 @@
 import { Component, effect, inject, signal } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogConfig,
+  MatDialogRef
+} from '@angular/material/dialog';
 import { Course } from '../models/course.model';
 import { EditCourseDialogData } from './edit-course-dialog.data.model';
 import { CoursesService } from '../services/courses.service';
@@ -12,7 +17,11 @@ import { firstValueFrom } from 'rxjs';
 @Component({
   selector: 'edit-course-dialog',
   standalone: true,
-  imports: [LoadingIndicatorComponent, ReactiveFormsModule, CourseCategoryComboboxComponent],
+  imports: [
+    LoadingIndicatorComponent,
+    ReactiveFormsModule,
+    CourseCategoryComboboxComponent
+  ],
   templateUrl: './edit-course-dialog.component.html',
   styleUrl: './edit-course-dialog.component.scss'
 })
@@ -42,12 +51,27 @@ export class EditCourseDialogComponent {
     const courseProps = this.form.value as Partial<Course>;
     if (this.data.mode === 'update') {
       await this.saveCourse(this.data?.course!.id, courseProps);
+    } else if (this.data.mode === 'create') {
+      await this.createCourse(courseProps);
+    }
+  }
+
+  async createCourse(course: Partial<Course>) {
+    try {
+      const newCourse = await this.coursesService.createCourse(course);
+      this.dialogRef.close(newCourse);
+    } catch (err) {
+      console.error(err);
+      alert('Error creating the course.');
     }
   }
 
   async saveCourse(courseId: string, changes: Partial<Course>) {
     try {
-      const updatedCourse = await this.coursesService.saveCourse(courseId, changes);
+      const updatedCourse = await this.coursesService.saveCourse(
+        courseId,
+        changes
+      );
       this.dialogRef.close(updatedCourse);
     } catch (err) {
       console.error(err);
@@ -70,7 +94,10 @@ export class EditCourseDialogComponent {
 //
 //   return dialog.open(EditCourseDialogComponent, config);
 // }
-export async function openEditCourseDialog(dialog: MatDialog, data: EditCourseDialogData) {
+export async function openEditCourseDialog(
+  dialog: MatDialog,
+  data: EditCourseDialogData
+) {
   const config: MatDialogConfig = new MatDialogConfig<any>();
   config.disableClose = true;
   config.autoFocus = true;
