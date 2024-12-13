@@ -1,4 +1,14 @@
-import { afterNextRender, Component, computed, effect, Inject, inject, Injector, OnInit, signal } from '@angular/core';
+import {
+  afterNextRender,
+  Component,
+  computed,
+  effect,
+  Inject,
+  inject,
+  Injector,
+  OnInit,
+  signal
+} from '@angular/core';
 import { CoursesService } from '../services/courses.service';
 import { Course, sortCoursesBySeqNo } from '../models/course.model';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
@@ -6,7 +16,12 @@ import { CoursesCardListComponent } from '../courses-card-list/courses-card-list
 import { MatDialog } from '@angular/material/dialog';
 import { MessagesService } from '../messages/messages.service';
 import { catchError, from, Observable, throwError } from 'rxjs';
-import { toObservable, toSignal, outputToObservable, outputFromObservable } from '@angular/core/rxjs-interop';
+import {
+  toObservable,
+  toSignal,
+  outputToObservable,
+  outputFromObservable
+} from '@angular/core/rxjs-interop';
 import { CoursesServiceWithFetch } from '../services/courses-fetch.service';
 
 @Component({
@@ -40,7 +55,9 @@ export class HomeComponent implements OnInit {
     });
 
     // OPTION 1
-    this.loadCourses().then(() => console.log(`All courses loaded`, this.#courses()));
+    this.loadCourses().then(() =>
+      console.log(`All courses loaded`, this.#courses())
+    );
 
     // OPTION 3
     // afterNextRender(() => {
@@ -62,5 +79,13 @@ export class HomeComponent implements OnInit {
       alert(`Error loading courses!`);
       console.error(err);
     }
+  }
+
+  onCourseUpdated(updatedCourse: Course) {
+    const courses = this.#courses();
+    const newCourses = courses.map((course) =>
+      course.id === updatedCourse.id ? updatedCourse : course
+    );
+    this.#courses.set(newCourses);
   }
 }
