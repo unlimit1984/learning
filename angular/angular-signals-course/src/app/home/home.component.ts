@@ -78,7 +78,7 @@ export class HomeComponent implements OnInit {
 
   async loadCourses() {
     try {
-      this.loadingService.loadingOn();
+      // this.loadingService.loadingOn();
       // console.log('loadCourses()');
       const courses = await this.coursesService.loadAllCourses();
       this.#courses.set(courses.sort(sortCoursesBySeqNo));
@@ -86,7 +86,7 @@ export class HomeComponent implements OnInit {
       alert(`Error loading courses!`);
       console.error(err);
     } finally {
-      this.loadingService.loadingOff();
+      // this.loadingService.loadingOff();
     }
   }
 
