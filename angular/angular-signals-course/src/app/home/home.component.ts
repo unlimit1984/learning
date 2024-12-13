@@ -24,6 +24,7 @@ import {
 } from '@angular/core/rxjs-interop';
 import { CoursesServiceWithFetch } from '../services/courses-fetch.service';
 import { openEditCourseDialog } from '../edit-course-dialog/edit-course-dialog.component';
+import { LoadingService } from '../loading/loading.service';
 
 @Component({
   selector: 'home',
@@ -51,6 +52,8 @@ export class HomeComponent implements OnInit {
     return courses.filter((course) => course.category === 'ADVANCED');
   });
 
+  loadingService = inject(LoadingService);
+
   constructor() {
     effect(() => {
       console.log(`Beginner courses: `, this.beginnerCourses());
@@ -75,12 +78,15 @@ export class HomeComponent implements OnInit {
 
   async loadCourses() {
     try {
+      this.loadingService.loadingOn();
       // console.log('loadCourses()');
       const courses = await this.coursesService.loadAllCourses();
       this.#courses.set(courses.sort(sortCoursesBySeqNo));
     } catch (err) {
       alert(`Error loading courses!`);
       console.error(err);
+    } finally {
+      this.loadingService.loadingOff();
     }
   }
 
