@@ -54,6 +54,8 @@ export class HomeComponent implements OnInit {
 
   loadingService = inject(LoadingService);
 
+  messagesService = inject(MessagesService);
+
   constructor() {
     effect(() => {
       console.log(`Beginner courses: `, this.beginnerCourses());
@@ -83,7 +85,8 @@ export class HomeComponent implements OnInit {
       const courses = await this.coursesService.loadAllCourses();
       this.#courses.set(courses.sort(sortCoursesBySeqNo));
     } catch (err) {
-      alert(`Error loading courses!`);
+      this.messagesService.showMessage('Error loading courses!', 'error');
+      // alert(`Error loading courses!`);
       console.error(err);
     } finally {
       // this.loadingService.loadingOff();
