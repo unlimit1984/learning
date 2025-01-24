@@ -33,6 +33,6 @@ export class AppComponent {
   isLoggedIn = this.authService.isLoggedIn;
 
   onLogout() {
-    this.authService.logout()
+    this.authService.logout();
   }
 }
