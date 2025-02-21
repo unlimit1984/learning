@@ -26,7 +26,12 @@
   <!--    </select>-->
   <!--  </div>-->
 
-  <course-category-combobox label="Course category" [(value)]="category" />
+  <!--  <course-category-combobox label="Course category" [(value)]="category" />-->
+
+  <course-category-combobox label="Course category" [(value)]="category">
+    <div class="title" #titleRef>Course category (via Content projection)</div>
+    <div class="title" #titleRef>Another title</div>
+  </course-category-combobox>
 
   <div class="form-control">
     <label>Course image:</label>
