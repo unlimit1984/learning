@@ -22,4 +22,8 @@ export class LessonsComponent {
   selectedLesson = signal<Lesson | null>(null);
 
   lessonsService = inject(LessonsService);
+
+  onSearch() {
+
+  }
 }
