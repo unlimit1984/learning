@@ -1,4 +1,12 @@
-import { Component, inject, input, output } from '@angular/core';
+import {
+  Component,
+  effect,
+  ElementRef,
+  inject,
+  input,
+  output,
+  viewChildren
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Course } from '../models/course.model';
 import { MatDialog } from '@angular/material/dialog';
@@ -23,6 +31,15 @@ export class CoursesCardListComponent {
   courseDeleted = output<string>();
 
   dialog = inject(MatDialog);
+
+  // courseCards = viewChildren<ElementRef>('courseCard');
+  courseCards = viewChildren('courseCard');
+
+  constructor() {
+    effect(() => {
+      console.log('courseCards: ', this.courseCards());
+    });
+  }
 
   // onEditCourse(course: Course) {
   //   openEditCourseDialog(this.dialog, {
