@@ -20,10 +20,14 @@ export class LessonsComponent {
   mode = signal<'master' | 'detail'>('master');
   lessons = signal<Lesson[]>([]);
   selectedLesson = signal<Lesson | null>(null);
-
   lessonsService = inject(LessonsService);
 
-  onSearch() {
+  // searchInput = viewChild<ElementRef>('search');
+  //Better to have required
+  searchInput = viewChild.required<ElementRef>('search');
 
+  onSearch() {
+    const query = this.searchInput()?.nativeElement.value;
+    console.log('Search query', query);
   }
 }

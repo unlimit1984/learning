@@ -3,11 +3,13 @@ import {
   Component,
   computed,
   effect,
+  ElementRef,
   Inject,
   inject,
   Injector,
   OnInit,
-  signal
+  signal,
+  viewChild
 } from '@angular/core';
 import { CoursesService } from '../services/courses.service';
 import { Course, sortCoursesBySeqNo } from '../models/course.model';
@@ -25,11 +27,12 @@ import {
 import { CoursesServiceWithFetch } from '../services/courses-fetch.service';
 import { openEditCourseDialog } from '../edit-course-dialog/edit-course-dialog.component';
 import { LoadingService } from '../loading/loading.service';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector: 'home',
   standalone: true,
-  imports: [MatTabGroup, MatTab, CoursesCardListComponent],
+  imports: [MatTabGroup, MatTab, CoursesCardListComponent, MatTooltip],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -56,7 +59,19 @@ export class HomeComponent implements OnInit {
 
   messagesService = inject(MessagesService);
 
+  // beginnersList = viewChild<CoursesCardListComponent>('beginnersList');
+  // beginnersList = viewChild('beginnersList', {
+  //   read: ElementRef
+  // });
+  beginnersList = viewChild('beginnersList', {
+    read: MatTooltip
+  });
+
   constructor() {
+    effect(() => {
+      console.log('beginnersList: ', this.beginnersList());
+    });
+
     effect(() => {
       console.log(`Beginner courses: `, this.beginnerCourses());
       console.log(`Advanced courses: `, this.advancedCourses());
