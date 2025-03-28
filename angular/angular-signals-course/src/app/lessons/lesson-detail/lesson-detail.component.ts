@@ -1,4 +1,11 @@
-import { Component, inject, input, output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  input,
+  output,
+  viewChild
+} from '@angular/core';
 import { Lesson } from '../../models/lesson.model';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LessonsService } from '../../services/lessons.service';
@@ -16,7 +23,25 @@ export class LessonDetailComponent {
   lessonUpdated = output<Lesson>();
   cancel = output();
 
+  lessonsService = inject(LessonsService);
+  messagesService = inject(MessagesService);
+
+  input = viewChild.required<ElementRef>('input');
+
   onCancel() {
     this.cancel.emit();
+  }
+
+  async onSave(description: string) {
+    try {
+      const lesson = this.lesson();
+      const updatedLesson = await this.lessonsService.saveLeson(lesson!.id, {
+        description
+      });
+      this.lessonUpdated.emit(updatedLesson);
+    } catch (err) {
+      console.error(err);
+      this.messagesService.showMessage('Error saving lesson!', 'error');
+    }
   }
 }
