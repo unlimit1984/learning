@@ -1,0 +1,23 @@
+<div class="chat">
+  <h2>WebSocket Chat</h2>
+
+  <div class="history">
+    <div *ngFor="let m of messages" class="message">
+      <div class="line">
+        <strong>{{ m.author }}:</strong>&nbsp;<span class="text">{{ m.text }}</span>
+      </div>
+      <div class="time">
+        <ng-container *ngIf="m.pending">sending…</ng-container>
+        <ng-container *ngIf="!m.pending && m.at">
+          {{ m.at | date: (isOlderThanDay(m.at) ? 'dd.MM.yy HH:mm' : 'HH:mm') }}
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <form (ngSubmit)="send()">
+    <input [(ngModel)]="author" name="author" placeholder="Your name" required />
+    <input [(ngModel)]="text"   name="text"   placeholder="Message"  required />
+    <button type="submit">Send</button>
+  </form>
+</div>

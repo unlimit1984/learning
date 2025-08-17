@@ -1,0 +1,18 @@
+<h1>RxJS counter</h1>
+<p>count: {{ count$ | async }}</p>
+<p>double: {{ double$ | async }}</p>
+
+<button (click)="dec()">-</button>
+<button (click)="inc()">+</button>
+<button (click)="reset()">reset</button>
+
+<h1>Input</h1>
+<input [formControl]="search" placeholder="Search users (name/email)" />
+<p *ngIf="loading$ | async">Loading...</p>
+<p *ngIf="(error$ | async) as err" style="color:#d33">{{ err }}</p>
+
+<ul>
+  <li *ngFor="let u of (users$ | async)">
+    <b>{{u.name}}</b> — {{u.email}}
+  </li>
+</ul>

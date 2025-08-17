@@ -1,0 +1,25 @@
+:host {
+  display: block;
+  height: 100vh;            /* во весь экран */
+  width: 100%;
+}
+
+.wrapper {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  gap: 12px;                /* расстояние между панелями */
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.pane {
+  flex: 1 1 50%;            /* по 50% ширины */
+  min-width: 0;             /* чтобы корректно работал overflow */
+  overflow: auto;           /* скролл, если контент большой */
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px;
+  box-sizing: border-box;
+  background: #fff;
+}

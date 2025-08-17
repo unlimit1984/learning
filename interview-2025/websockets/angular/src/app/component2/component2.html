@@ -1,0 +1,23 @@
+<h1>Signals counter</h1>
+<p>count: {{ count() }}</p>
+<p>double: {{ double() }}</p>
+
+<button (click)="dec()">-</button>
+<button (click)="inc()">+</button>
+<button (click)="reset()">reset</button>
+
+<h1>Input</h1>
+<input
+  [value]="query()"
+  (input)="query.set($any($event.target).value)"
+  placeholder="Search users (name/email)" />
+
+
+<p *ngIf="loading()">Loading...</p>
+<p *ngIf="error()" style="color:#d33">{{ error() }}</p>
+
+<ul>
+  <li *ngFor="let u of users()">
+    <b>{{u.name}}</b> — {{u.email}}
+  </li>
+</ul>
