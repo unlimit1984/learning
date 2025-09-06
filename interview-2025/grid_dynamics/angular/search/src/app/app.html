@@ -1,0 +1,9 @@
+<p *ngFor="let user of users$ | async">
+  {{ user.name }}
+</p>
+
+<input [formControl]="search" />
+<!--<p *ngFor="let user of users$ | async">-->
+<p *ngFor="let user of filteredUsers$ | async">
+  {{ user.name }}
+</p>

@@ -84,22 +84,92 @@
 // 704. Binary Search
 // https://leetcode.com/problems/binary-search
 
-const nums: number[] = [1,2,3,4];
-const target: number = 4
-// console.log(Math.floor(7/3));
-console.log(getInRange(nums, 0, nums.length - 1, target));
+// const nums: number[] = [1,2,3,4];
+// const target: number = 4
+// // console.log(Math.floor(7/3));
+// console.log(getInRange(nums, 0, nums.length - 1, target));
+// //
+// function getInRange(nums: number[], left: number, right: number, target: number): number {
+//   if (left == right) {
+//     return target == nums[left] ? left : -1;
+//   } else {
+//     const middle: number = left + Math.floor((right - left) / 2);
+//     if (nums[middle] == target) {
+//       return middle;
+//     } else if (nums[middle] > target) {
+//       return getInRange(nums, left, middle, target);
+//     } else {
+//       return getInRange(nums, middle + 1, right, target);
+//     }
+//   }
+// }
+
+// 104. Maximum Depth of Binary Tree
+// https://leetcode.com/problems/maximum-depth-of-binary-tree
+// Definition for a binary tree node.
+// class TreeNode {
+//   val: number;
+//   left: TreeNode | null;
+//   right: TreeNode | null;
+//   constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+//     this.val = val === undefined ? 0 : val;
+//     this.left = left === undefined ? null : left;
+//     this.right = right === undefined ? null : right;
+//   }
+// }
 //
-function getInRange(nums: number[], left: number, right: number, target: number): number {
-  if (left == right) {
-    return target == nums[left] ? left : -1;
-  } else {
-    const middle: number = left + Math.floor((right - left) / 2);
-    if (nums[middle] == target) {
-      return middle;
-    } else if (nums[middle] > target) {
-      return getInRange(nums, left, middle, target);
-    } else {
-      return getInRange(nums, middle + 1, right, target);
-    }
+// function maxDepth(root: TreeNode | null): number {
+//   if (root === null) {
+//     return 0;
+//   }
+//   let maxDepth: number | undefined = 1;
+//   maxDepth = func(root, maxDepth, 1);
+//
+//   return maxDepth || 0;
+// }
+//
+// function func(root: TreeNode | null, maxDepth: number, depth: number): number | undefined {
+//   if (root === null) {
+//     return depth;
+//   }
+//
+//   if (root.left !== null) {
+//     maxDepth = Math.max(depth+1, maxDepth);
+//     func(root.left, maxDepth, depth+1);
+//   }
+//   if (root.right !== null) {
+//     maxDepth = Math.max(depth+1, maxDepth);
+//     func(root.right, maxDepth, depth+1);
+//   }
+// }
+//
+// const root = new TreeNode(3, new TreeNode(9), new TreeNode(20, new TreeNode(15), new TreeNode(7)));
+// console.log(maxDepth(root));
+
+
+// 347. Top K Frequent Elements
+// https://leetcode.com/problems/top-k-frequent-elements
+function topKFrequent(nums: number[], k: number): number[] {
+  const result: number[] = [];
+
+  const countMap = new Map<number, number>();
+  for (let entry of nums) {
+    countMap.set(entry, (countMap.get(entry) ?? 0) + 1);
   }
+
+  const freq: number[] = new Array(nums.length + 1);
+  for (const [key, value] of countMap.entries()) {
+    freq[value] = key;
+  }
+
+  let i = freq.length - 1;
+  while (k > 0) {
+    if (freq[i] != undefined) {
+      result.push(freq[i]);
+      k--;
+    }
+    i--;
+  }
+  return result;
 }
+console.log(topKFrequent([1,1,2,2,2,3],2));
