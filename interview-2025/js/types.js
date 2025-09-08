@@ -24,6 +24,18 @@ console.log("====== Ссылочные типы (Reference Types) =======");
 // Object
 let obj = { a: 1, b: 2 };
 console.log(typeof obj, obj);
+//Class
+class MyUser {
+  constructor(name, age) {
+    if (!name || !age) {
+      throw new Error("Все поля (name, age) обязательны");
+    }
+    this.name = name;
+    this.age = age;
+  }
+}
+console.log("typeof MyUser", typeof MyUser, MyUser);
+
 //Array
 let arrayVar = [1, 2, 3];
 arrayVar.push(4);
@@ -75,7 +87,7 @@ const error = new Error("Что-то пошло не так!");
 console.log(typeof error, error);
 // Functions
 function func() {}
-console.log(typeof func);
+console.log("typeof func", typeof func);
 //Promise
 const myPromise = new Promise((resolve, reject) => {
   setTimeout(() => {
@@ -103,10 +115,125 @@ function example() {
 example();
 // console.log(xx); // ReferenceError: x is not defined (а здесь уже НЕ доступна)
 
+console.log("==== тоже про readonly ====");
+// 1. Функция-валидатор
+function validateUser(user) {
+  const requiredFields = ["name", "email", "age"];
+  for (const field of requiredFields) {
+    if (!(field in user)) {
+      throw new Error(`Поле ${field} обязательно`);
+    }
+  }
+  return true;
+}
+// Использование
+const u = { name: "John", email: "john@example.com", age: 30 };
+try {
+  validateUser(u);
+  console.log("Все обязательные поля присутствуют");
+} catch (error) {
+  console.error(error.message);
+}
+//2. В классах (Конструктор)
+class User0 {
+  constructor(name, email, age) {
+    if (!name || !email || !age) {
+      throw new Error("Все поля (name, email, age) обязательны");
+    }
+
+    this.name = name;
+    this.email = email;
+    this.age = age;
+  }
+}
+// Использование
+let user0;
+try {
+  user0 = new User0("John", "john@example.com", 30);
+  console.log("typeof user", typeof user0, user0);
+} catch (error) {
+  console.error(error.message);
+  console.log("typeof user", typeof user0, user0);
+}
+// 4. Продвинутый с помощью геттеров/сеттеров
+class User00 {
+  constructor() {
+    this._requiredFields = ["name", "email", "age"];
+    this._data = {};
+  }
+  setField(name, value) {
+    this._data[name] = value;
+    return this;
+  }
+  _validate() {
+    for (const field of this._requiredFields) {
+      if (!(field in this._data)) {
+        throw new Error(`Поле ${field} обязательно`);
+      }
+    }
+  }
+  complete() {
+    this._validate();
+    return Object.freeze(this._data); // Возвращаем неизменяемый объект
+  }
+}
+
+// Использование
+const user00 = new User00();
+user00
+  .setField("name", "John")
+  .setField("email", "john@example.com")
+  .setField("age", 30);
+
+const userData = user00.complete(); // Получаем валидированный объект
+
+console.log("==== Proxy ====");
+const person = {
+  name: "Анна",
+  age: 25,
+};
+// Проверяем существование свойств
+console.log("name" in person); // true - свойство существует
+console.log("salary" in person); // false - свойства нет
+// Используем наше выражение
+function getValue(obj, propName) {
+  return propName in obj ? obj[propName] : 37;
+}
+console.log(getValue(person, "name")); // "Анна" (свойство есть)
+console.log(getValue(person, "age")); // 25 (свойство есть)
+console.log(getValue(person, "salary")); // 37 (свойства нет)
+
+var handler = {
+  get: function (target, name) {
+    return name in target ? target[name] : 37;
+  },
+  set: function (target, prop, value) {
+    if (prop === "age") {
+      if (!Number.isInteger(value)) {
+        throw new TypeError("The age is not an integer");
+      }
+      if (value > 200) {
+        throw new RangeError("The age seems invalid");
+      }
+    }
+    // Стандартное сохранение значения
+    obj[prop] = value;
+    // Обозначить успех
+    return true;
+  },
+};
+const person2 = {
+  name: "John",
+  age: 20,
+};
+const proxy = new Proxy(person2, handler);
+// proxy.age = "30";
+console.log("proxy.nodDefined", proxy.nodDefined);
+
 console.log("==== instanceof ====");
 //Array
 const fakeArray = { 0: "a", 1: "b", length: 2 };
-console.log("instanceof Map", fakeArray instanceof Map, fakeArray); // false
+console.log(fakeArray, "instanceof Map", fakeArray instanceof Map); // false
 //Map
 let myMap;
 // myMap = { 0: 'a', 1: 'b'};
@@ -195,3 +322,42 @@ function foo() {
 }
 foo();
 console.log(a);
+
+function func() {
+  console.log("myVar", myVar);
+  if (true) {
+    var myVar = 10;
+  }
+  console.log("myVar", myVar);
+}
+func();
+
+function test() {
+  if (true) {
+    var x2 = 10; // Видна во всей функции!
+  }
+  console.log("var x2", x2); // 10 (доступна вне блока!)
+}
+test();
+// console.log(x2); // ReferenceError: x is not defined
+
+console.log("Object.defineProperty()");
+const user8 = {};
+Object.defineProperty(user8, "id", {
+  value: 1,
+  writable: false, // Нельзя изменять значение
+  enumerable: true, // Будет видно в for-in
+  configurable: false, // Нельзя удалить и переопределить
+});
+user8.id = 2; // ❌ Не сработает (в strict mode - TypeError)
+console.log("user8.id", user8.id); // 1
+// Проверка
+console.log(Object.getOwnPropertyDescriptor(user, "id"));
+// { value: 1, writable: false, enumerable: true, configurable: false }
+console.log("===== Как сделать поле обязательным в интерфейсе =====");
+console.log("===== keyof =====");
+const obj3 = {
+  name: "John",
+  age: 30,
+};
+console.log("Object.keys(obj3)", Object.keys(obj3));
