@@ -134,11 +134,19 @@ interface User2 {
   readonly id: number; // Только для чтения
   name: string; // Обычное поле
   readonly createdAt: Date; // Только для чтения
+  address: {
+    city: string;
+    street: string;
+  }
 }
 const user: User2 = {
   id: 1,
   name: "John",
   createdAt: new Date(),
+  address: {
+    city: 'Moscow',
+    street: 'Tverskaya',
+  }
 };
 
 user.name = "Alice"; // ✅ Можно изменить
@@ -149,10 +157,18 @@ const user2: Readonly<User2> = {
   id: 1,
   name: "John",
   createdAt: new Date(),
+  address: {
+    city: "Moscow",
+    street: "Tverskaya",
+  },
+
 };
 // user2.name = 'Alice'; // ❌ Все поля только для чтения!
 // user2.id = 2;         // ❌ Error
 // user2.createdAt = new Date(); // ❌ Error
+user2.address.city = "Klin";
+console.log('Readonly<User2>',user2);
+
 
 type Product = {
   readonly id: string;
@@ -324,7 +340,7 @@ function createUser(user: RequiredUser) {
 }
 createUser({ id: 1, name: "John", email: "john@example.com" }); // OK
 // createUser({ name: "John" }); // Ошибка: отсутствуют id и email
-//Pick<Type>
+//Pick<Type, Keys>
 interface User33 {
   id: number;
   name: string;
@@ -342,7 +358,6 @@ type UserPreview = Pick<User33, 'id' | 'name' | 'email'>;
   email: string;
 }
 */
-
 // Использование: для API ответа с сокращенными данными
 function getUserPreview(): UserPreview {
   return {
@@ -350,6 +365,56 @@ function getUserPreview(): UserPreview {
     name: "John",
     email: "john@example.com"
   };
+}
+//Omit<Type, Keys>
+interface User44 {
+  id: number;
+  name: string;
+  email: string;
+  age: number;
+  password: string; // Секретное поле
+}
+
+// Исключаем конфиденциальные данные
+type PublicUser = Omit<User44, 'password' | 'email'>;
+/*
+Эквивалентно:
+{
+  id: number;
+  name: string;
+  age: number;
+}
+*/
+// Исключаем несколько полей
+type UserWithoutIds = Omit<User44, 'id' | 'password'>;
+/*
+Эквивалентно:
+{
+  name: string;
+  email: string;
+  age: number;
+}
+*/
+// Использование: для публичного API
+function getPublicUserData(): PublicUser {
+  return {
+    id: 1,
+    name: "John",
+    age: 30
+  };
+}
+//Обновление с валидацией
+interface Product1 {
+  id: number;
+  name: string;
+  price: number;
+  category: string;
+  inStock: boolean;
+}
+// Для обновления продукта: все поля необязательные, кроме id
+type UpdateProductDto = Partial<Omit<Product1, 'id'>> & { id: number };
+function updateProduct(data: UpdateProductDto) {
+  // data обязательно содержит id, остальные поля опциональны
 }
 
 console.log("===== keyof =====");
