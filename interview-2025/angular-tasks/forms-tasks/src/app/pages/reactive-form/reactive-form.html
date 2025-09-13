@@ -1,0 +1,9 @@
+<h2>Reactive-form component</h2>
+<form [formGroup]="rForm">
+  <input type="text" formControlName="textField" />
+  <button type="button" (click)="onClick($event)">Just button</button>
+  <button type="button" (click)="onClear($event)">Clear field</button>
+  <button type="button" (click)="onCheckStatus($event)">Check form status</button>
+</form>
+<p>StatusVar: {{ statusVar }}</p>
+<p>StatusSignal: {{ statusSignal() }}</p>

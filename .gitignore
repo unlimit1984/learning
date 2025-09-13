@@ -1,7 +1,7 @@
 #ts, js, angular
 node_modules
 *.log
-public/
+#public/
 .idea
 
 #java

@@ -1,0 +1,9 @@
+<p>filtered-users works!</p>
+
+<form [formGroup]="form">
+  <input type="text" [formControlName]="'search'" />
+  <br />
+  <button type="button" (click)="onSearch()">Search</button>
+</form>
+
+<p *ngFor="let user of filteredUsers$ | async">{{ user.name }}</p>
