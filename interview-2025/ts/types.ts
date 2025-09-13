@@ -128,6 +128,16 @@ console.log(tuple2);
 type UserKeys = keyof User;
 // Результат: "name" | "age"
 const field1: UserKeys = "name";
+//одинаковое название - type имеет преимущество
+interface SameType {
+  age: number;
+}
+type SameName = {
+  name: string;
+}
+const sameType: SameName = {
+  name: "John",
+}
 
 console.log("===== Как сделать поле readonly в interface/type/class =====");
 interface User2 {
@@ -488,4 +498,3 @@ function getConfigValue(key: ConfigKeys) {
 }
 getConfigValue("apiUrl");    // ✅ OK
 // getConfigValue("invalid");   // ❌ Error
-

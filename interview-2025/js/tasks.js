@@ -1,32 +1,32 @@
 // Tasks
 
 //1. GRID DYNAMICS
-// const obj = {
-//   async func() {
-//     console.log('1');
-//
-//     setTimeout(() => {
-//       console.log('2');
-//     }, 0);
-//
-//     Promise.resolve().then(() => {
-//       console.log('3');
-//     });
-//
-//     (function () {
-//       console.log('4');
-//       const self = this;
-//       console.log('5', self);
-//     })();
-//
-//     await null;
-//
-//     console.log('6');
-//   }
-// };
+const obj = {
+  async func() {
+    console.log('1');
 
-// obj.func();
-// console.log('7');
+    setTimeout(() => {
+      console.log('2');
+    }, 0);
+
+    Promise.resolve().then(() => {
+      console.log('3');
+    });
+
+    (function () {
+      console.log('4');
+      const self = this;
+      console.log('5', self);
+    })();
+
+    await null;
+
+    console.log('6');
+  }
+};
+
+obj.func();
+console.log('7');
 
 // const obj = {
 //   async func() {
@@ -557,19 +557,27 @@
 // declareFunc(); // this = window/global (или undefined в strict mode)
 // expressFunc(); // this = window/global (или undefined в strict mode)
 
-const obj = {
-  name: 'Alice',
+// const obj = {
+//   name: 'Alice',
+//   // Обычная функция
+//   regularFunc: function() {
+//     console.log('Regular:', this?.name);
+//   },
+//   // Стрелочная функция
+//   arrowFunc: () => {
+//     console.log('Arrow:', this?.name);
+//   }
+// };
+// obj.regularFunc();
+// obj.arrowFunc();
 
-  // Обычная функция
-  regularFunc: function() {
-    console.log('Regular:', this?.name);
-  },
 
-  // Стрелочная функция
-  arrowFunc: () => {
-    console.log('Arrow:', this?.name);
-  }
-};
+// var a = 10;
+// function foo(myVar){
+//   console.log(myVar);
+// }
+// function bar(argFunc){
+//   argFunc(a);
+// }
+// bar(foo); // Какой будет вывод
 
-obj.regularFunc();
-obj.arrowFunc();
