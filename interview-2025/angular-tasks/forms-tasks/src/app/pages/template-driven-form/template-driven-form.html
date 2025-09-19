@@ -1,0 +1,14 @@
+<!--<form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">-->
+<form #myForm="ngForm" (ngSubmit)="onSubmit()">
+  <label for="name">Имя:</label>
+  <input id="name" name="name" ngModel required #name="ngModel" />
+  <span *ngIf="name.invalid && name.touched">Поле обязательно</span>
+  <br />
+  <label>Пол:</label>
+  <input type="radio" id="gender-male" name="gender" ngModel value="male" />
+  <input type="radio" id="gender-female" name="gender" ngModel value="female" />
+  <br />
+  <button type="submit" [disabled]="myForm.invalid">Отправить</button>
+</form>
+
+<p>Форма валидна: {{ myForm.valid }}</p>

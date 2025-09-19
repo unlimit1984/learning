@@ -146,30 +146,49 @@
 // const root = new TreeNode(3, new TreeNode(9), new TreeNode(20, new TreeNode(15), new TreeNode(7)));
 // console.log(maxDepth(root));
 
-
 // 347. Top K Frequent Elements
 // https://leetcode.com/problems/top-k-frequent-elements
-function topKFrequent(nums: number[], k: number): number[] {
-  const result: number[] = [];
+// function topKFrequent(nums: number[], k: number): number[] {
+//   const result: number[] = [];
+//
+//   const countMap = new Map<number, number>();
+//   for (let entry of nums) {
+//     countMap.set(entry, (countMap.get(entry) ?? 0) + 1);
+//   }
+//
+//   const freq: number[] = new Array(nums.length + 1);
+//   for (const [key, value] of countMap.entries()) {
+//     freq[value] = key;
+//   }
+//
+//   let i = freq.length - 1;
+//   while (k > 0) {
+//     if (freq[i] != undefined) {
+//       result.push(freq[i]);
+//       k--;
+//     }
+//     i--;
+//   }
+//   return result;
+// }
+// console.log(topKFrequent([1,1,2,2,2,3],2));
 
-  const countMap = new Map<number, number>();
-  for (let entry of nums) {
-    countMap.set(entry, (countMap.get(entry) ?? 0) + 1);
+// 231. Power of Two
+// https://leetcode.com/problems/power-of-two/
+function isPowerOfTwo(n: number): boolean {
+  if (n === 0) {
+    return false;
   }
-
-  const freq: number[] = new Array(nums.length + 1);
-  for (const [key, value] of countMap.entries()) {
-    freq[value] = key;
+  while (n % 2 === 0) {
+    n /= 2;
   }
-
-  let i = freq.length - 1;
-  while (k > 0) {
-    if (freq[i] != undefined) {
-      result.push(freq[i]);
-      k--;
-    }
-    i--;
-  }
-  return result;
+  return n == 1;
 }
-console.log(topKFrequent([1,1,2,2,2,3],2));
+
+console.log(isPowerOfTwo(1));
+console.log(isPowerOfTwo(2));
+console.log(!isPowerOfTwo(3));
+console.log(isPowerOfTwo(4));
+console.log(!isPowerOfTwo(5));
+console.log(isPowerOfTwo(16));
+console.log(isPowerOfTwo(512));

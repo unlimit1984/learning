@@ -1,0 +1,8 @@
+<p>hooks-parent works!</p>
+
+<form [formGroup]="form">
+  <input type="text" formControlName="someField" />
+  <button type="button" (click)="onChangeInput()">Put input to child</button>
+</form>
+
+<app-hooks-child [text]="inputVariable"></app-hooks-child>

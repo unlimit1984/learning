@@ -3,30 +3,30 @@
 //1. GRID DYNAMICS
 const obj = {
   async func() {
-    console.log('1');
+    console.log("1");
 
     setTimeout(() => {
-      console.log('2');
+      console.log("2");
     }, 0);
 
     Promise.resolve().then(() => {
-      console.log('3');
+      console.log("3");
     });
 
     (function () {
-      console.log('4');
+      console.log("4");
       const self = this;
-      console.log('5', self);
+      console.log("5", self);
     })();
 
     await null;
 
-    console.log('6');
-  }
+    console.log("6");
+  },
 };
 
 obj.func();
-console.log('7');
+console.log("7");
 
 // const obj = {
 //   async func() {
@@ -541,7 +541,6 @@ console.log('7');
 // obj.greet();
 // obj.delayedGreet();
 
-
 // 'use strict'
 // Function Declaration
 // function declareFunc() {
@@ -571,7 +570,6 @@ console.log('7');
 // obj.regularFunc();
 // obj.arrowFunc();
 
-
 // var a = 10;
 // function foo(myVar){
 //   console.log(myVar);
@@ -580,4 +578,54 @@ console.log('7');
 //   argFunc(a);
 // }
 // bar(foo); // Какой будет вывод
+
+// const animals = [{ name: "Cat" }, { name: "Dog" }];
+// const animalsCopy = animals.slice();
+// animalsCopy[0].name = "Lion";
+// console.log(animals);
+
+// Какой будет вывод?
+// console.log('sync A');
+// setTimeout(() => console.log('timeout (task)'));           // макрозадача
+// Promise.resolve().then(() => console.log('promise (micro)'));  // микро
+// new Promise((resolve) => {
+//   console.log('sync Promise: In promise constructor');
+// }).then(() => console.log('Then promise'));
+// queueMicrotask(() => console.log('qm (micro)'));                // микро
+// // const mo = new MutationObserver(() => console.log('mo (micro)'));
+// // mo.observe(document.body, { childList: true });
+// // document.body.append('x'); // вызовет mo в микрозадаче
+// // requestAnimationFrame(() => console.log('rAF (before paint)'));
+// console.log('sync B');
+
+//Замыкание
+// function outer() {
+//   let counter = 0;
+//   return function inner() {
+//     counter++;
+//     console.log(counter);
+//   };
+// }
+// const closure = outer();
+// closure(); //1
+// closure(); //2
+
+//разница между обычной и стрелочной функцией
+// const person = {
+//   name: "Alice",
+//   greet: function () {
+//     console.log(`Hello, ${this.name}!`);
+//   },
+//   greetArrow: () => {
+//     console.log(`Hello, ${this.name}!`);
+//   },
+// };
+// person.greet(); //Alice
+// person.greetArrow(); //undefined
+
+//Деструктуризация объектов
+// const { name, age } = { name: "Alice", age: 25, city: "New York" };
+// console.log(name, age);
+// const [first, second] = ["red", "blue", "gren"];
+// console.log(first, second);
 

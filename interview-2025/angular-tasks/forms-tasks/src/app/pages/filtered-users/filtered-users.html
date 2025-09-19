@@ -7,3 +7,10 @@
 </form>
 
 <p *ngFor="let user of filteredUsers$ | async">{{ user.name }}</p>
+
+<!--Тут нужно использовать tracking-->
+<!--@for (user of filteredUsers$ | async; track user.id)) {-->
+<!--  <p>{{user.name}}</p>-->
+<!--} @empty {-->
+<!--  <p>No items</p>-->
+<!--}-->

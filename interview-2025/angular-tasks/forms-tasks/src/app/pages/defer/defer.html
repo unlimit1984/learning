@@ -1,0 +1,18 @@
+<div style="height: 20vh; background-color: aquamarine; border: 1px solid black">
+  @defer (on timer(5s)) {
+    <div>Тяжело загруженный контент on timer(5s)</div>
+  } @placeholder {
+    <div>Рекомендации появятся через 5 секунд</div>
+  }
+</div>
+
+<div style="height: 20vh; background-color: #cccccc; border: 1px solid black">
+  @defer (when isReady) {
+    <h3>Загруженные данные:</h3>
+    <div>ID: {{ data?.id }}, Name: {{ data?.name }}</div>
+  } @placeholder {
+    <div>Загрузка данных...</div>
+  } @error {
+    <div>Произошла ошибка при загрузке данных</div>
+  }
+</div>

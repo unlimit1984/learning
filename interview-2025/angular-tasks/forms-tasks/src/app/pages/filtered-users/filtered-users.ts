@@ -1,12 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { debounceTime, filter, map, merge, mergeMap, Observable, of, startWith, tap } from 'rxjs';
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  map,
+  merge,
+  mergeMap,
+  Observable,
+  of,
+  shareReplay,
+  startWith,
+  tap
+} from 'rxjs';
 import { CommonModule } from '@angular/common';
 
 interface User {
@@ -46,10 +52,24 @@ export class FilteredUsers implements OnInit {
       search: new FormControl(''),
     });
 
+    // this.filteredUsers$ = this.form.valueChanges.pipe(
+    //   startWith({}),
+    //   debounceTime(1000),
+    //   mergeMap(() => {
+    //     const searchValue = this.form.get('search')?.value || '';
+    //     return this.allUsers$.pipe(
+    //       map((users) =>
+    //         users.filter((u) => u.name.toLowerCase().startsWith(searchValue.toLowerCase())),
+    //       ),
+    //     );
+    //   }),
+    // );
     this.filteredUsers$ = this.form.valueChanges.pipe(
       startWith({}),
+      map(value => value.trim()),
       debounceTime(1000),
-      mergeMap(() => {
+      distinctUntilChanged(),
+      mergeMap((value) => {
         const searchValue = this.form.get('search')?.value || '';
         return this.allUsers$.pipe(
           map((users) =>
@@ -57,6 +77,7 @@ export class FilteredUsers implements OnInit {
           ),
         );
       }),
+      shareReplay(1)
     );
   }
 
