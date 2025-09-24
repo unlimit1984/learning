@@ -7,6 +7,10 @@ node_modules
 #java
 target
 .classpath
+*.class
 .project
 .settings
 *.iml
+
+# Some other files
+.DS_Store
