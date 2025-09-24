@@ -1,32 +1,32 @@
 // Tasks
 
 //1. GRID DYNAMICS
-const obj = {
-  async func() {
-    console.log("1");
-
-    setTimeout(() => {
-      console.log("2");
-    }, 0);
-
-    Promise.resolve().then(() => {
-      console.log("3");
-    });
-
-    (function () {
-      console.log("4");
-      const self = this;
-      console.log("5", self);
-    })();
-
-    await null;
-
-    console.log("6");
-  },
-};
-
-obj.func();
-console.log("7");
+// const obj = {
+//   async func() {
+//     console.log("1");
+//
+//     setTimeout(() => {
+//       console.log("2");
+//     }, 0);
+//
+//     Promise.resolve().then(() => {
+//       console.log("3");
+//     });
+//
+//     (function () {
+//       console.log("4");
+//       const self = this;
+//       console.log("5", self);
+//     })();
+//
+//     await null;
+//
+//     console.log("6");
+//   },
+// };
+//
+// obj.func();
+// console.log("7");
 
 // const obj = {
 //   async func() {
@@ -134,37 +134,54 @@ console.log("7");
 // fetchUser(7).then(makeLogger('User loaded:')); // замкнули prefix
 // console.log('After fetch');
 
-// 10
-// Плохой сюрприз с var:
+// 10 - Плохой сюрприз с var:
 // for (var i = 0; i < 3; i++) {
 //   setTimeout(() => console.log('var i =', i), 0);
 // }
 // выведет: 3, 3, 3 (все замыкания видят ОДНУ переменную i, изменённую до 3)
 
-// 11
-// Правильно с let:
+// 11 let-решение
 // for (let j = 0; j < 3; j++) {
 //   setTimeout(() => console.log('let j =', j), 0);
 // }
 // выведет: 0, 1, 2 (каждому шагу — своя j)
 
-// ! - Отдельно обсудить
-// 12
+// 12 с IIFE (Immediately Invoked Function Expression)
 // for (var i = 0; i < 3; i++) {
 //   (function (k) {
 //     setTimeout(() => console.log('fixed i =', k), 0);
 //   })(i);
 // }
 
-// 12_1
+// 12_1 Хранить копию через const (создаем блочную видимость)
 // for (var i = 0; i < 3; i++) {
 //   const k = i;
 //   setTimeout(() => console.log('fixed i =', k), 0);
 // }
 
-// 12_2
+// 12_2 Хранить копию через let (создаем блочную видимость)
+// for (var i = 0; i < 3; i++) {
+//   let k = i;
+//   setTimeout(() => console.log('fixed i =', k), 0);
+// }
+
+// 12_3
 // for (const i of [0,1,2]) {
 //   setTimeout(() => console.log(i), 0);
+// }
+
+// 12_4 дополнительный аргумент в setTimeout
+// for (var i = 0; i < 3; i++) {
+//   setTimeout(function(k) {
+//     console.log('fixed i =',k);
+//   }, 0, i);
+// }
+
+// 12_5 bind
+// for (var i = 0; i < 3; i++) {
+//   setTimeout(function(k) {
+//     console.log('fixed i =', k);
+//   }.bind(null, i), 0);
 // }
 
 // 13
@@ -622,6 +639,20 @@ console.log("7");
 // };
 // person.greet(); //Alice
 // person.greetArrow(); //undefined
+
+// Тут в порядке, так как вызывается через person
+const person = {
+  name: 'Alice',
+  sayHi() {
+    console.log(`Hi, I'm ${this.name}`);
+  }
+};
+person.sayHi();
+const badGreet = person.sayHi;
+badGreet();
+const fixedBadBadGreat = badGreet.bind(person);
+fixedBadBadGreat();
+
 
 //Деструктуризация объектов
 // const { name, age } = { name: "Alice", age: 25, city: "New York" };

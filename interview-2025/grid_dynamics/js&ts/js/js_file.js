@@ -1,5 +1,5 @@
 
-
+// Скопировано в interview-2025/js/tasks.js
 const obj = {
   async func() {
     console.log('1');
