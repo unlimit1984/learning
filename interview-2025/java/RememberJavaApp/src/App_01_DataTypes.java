@@ -1,9 +1,7 @@
-public class App {
+public class App_01_DataTypes {
     public static void main(String[] args) throws Exception {
         
-    // 01 Data Types
-        // Primitive types - 8 types
-        
+        // Primitive types - 8 types        
         // byte: 8 bit, -128 ,127
         byte b = 127;
         System.out.println(b);
@@ -50,7 +48,6 @@ public class App {
         Double dd = 123.23;
         Character ch2 = 'B';
         Boolean isTrue2 = true; //Boolean.FALSE;
-
 
     }
 }
