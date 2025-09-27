@@ -1,0 +1,17 @@
+<h1>Test</h1>
+<form [formGroup]="form">
+  <input type="text" formControlName="memoryInput" />
+  <button type="button" (click)="generate()">Generate memory game</button>
+</form>
+
+<div class="table-container">
+  @for (row of sideBehaviorSubject$ | async; track $index) {
+    <div class="row">
+      @for (column of row; track $index) {
+        <div class="column">
+          {{ column }}
+        </div>
+      }
+    </div>
+  }
+</div>
