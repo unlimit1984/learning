@@ -645,13 +645,19 @@ const person = {
   name: 'Alice',
   sayHi() {
     console.log(`Hi, I'm ${this.name}`);
+  },
+  sayUnknown: () => {
+    console.log(`Hi, I'm ${this.name}`);
   }
 };
-person.sayHi();
+person.sayHi(); //Alice
 const badGreet = person.sayHi;
-badGreet();
+badGreet(); //undefined
 const fixedBadBadGreat = badGreet.bind(person);
-fixedBadBadGreat();
+fixedBadBadGreat();//Alice
+person.sayUnknown();//undefined
+const badUnknown = person.sayUnknown
+badUnknown.bind(person)(); //не поможет для стрелочной функции, undefined
 
 
 //Деструктуризация объектов
